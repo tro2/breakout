@@ -84,6 +84,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -113,18 +114,20 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\SDL\include;$(SolutionDir)Dependencies\SDL_image\include;$(SolutionDir)Dependencies\SDL_mixer\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\SDL\include;$(SolutionDir)Dependencies\SDL_image\include;$(SolutionDir)Dependencies\SDL_mixer\include;$(SolutionDir)Dependencies\SDL_ttf\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\SDL\lib\$(Platform);$(SolutionDir)Dependencies\SDL_image\lib\$(Platform);$(SolutionDir)Dependencies\SDL_mixer\lib\$(Platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\SDL\lib\$(Platform);$(SolutionDir)Dependencies\SDL_image\lib\$(Platform);$(SolutionDir)Dependencies\SDL_mixer\lib\$(Platform);$(SolutionDir)Dependencies\SDL_ttf\lib\$(Platform)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(ProjectDir)..\Dependencies\SDL\lib\$(Platform)\SDL2.dll" "$(OutDir)" /q/r/y
 xcopy "$(ProjectDir)..\Dependencies\SDL_image\lib\$(Platform)\SDL2_image.dll" "$(OutDir)" /q/r/y
-xcopy "$(ProjectDir)..\Dependencies\SDL_mixer\lib\$(Platform)\SDL2_mixer.dll" "$(OutDir)" /q/r/y</Command>
+xcopy "$(ProjectDir)..\Dependencies\SDL_mixer\lib\$(Platform)\SDL2_mixer.dll" "$(OutDir)" /q/r/y
+xcopy "$(ProjectDir)..\Dependencies\SDL_ttf\lib\$(Platform)\SDL2_ttf.dll" "$(OutDir)" /q/r/y
+xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /q/r/y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -153,7 +156,17 @@ xcopy "$(ProjectDir)..\Dependencies\SDL_mixer\lib\$(Platform)\SDL2_mixer.dll" "$
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\TextTexture.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\RenderManager.cpp" />
+    <ClCompile Include="src\Utils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\DataTypes.h" />
+    <ClInclude Include="src\GameData.h" />
+    <ClInclude Include="src\TextTexture.h" />
+    <ClInclude Include="src\RenderManager.h" />
+    <ClInclude Include="src\Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
