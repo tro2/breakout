@@ -44,6 +44,8 @@ public:
     // loads game textures into Textures&
     bool loadTextures(AppContext& app, Textures& textures) const;
 
+    void renderGame(const Textures& gTextures, GameState gState, GameObjects gObjects, AppContext& app);
+
     // render given texture at the given point, adapted to window size, optional clip for sprite sheet
     void renderTexture(const TextTexture& text, Vec2d position, AppContext& app
         , SDL_Rect* clip = nullptr) const;

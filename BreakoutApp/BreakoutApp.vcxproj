@@ -156,6 +156,7 @@ xcopy "$(ProjectDir)..\Dependencies\SDL_mixer\lib\$(Platform)\SDL2_mixer.dll" "$
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\GameManager.cpp" />
     <ClCompile Include="src\TextTexture.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\RenderManager.cpp" />
@@ -164,6 +165,7 @@ xcopy "$(ProjectDir)..\Dependencies\SDL_mixer\lib\$(Platform)\SDL2_mixer.dll" "$
   <ItemGroup>
     <ClInclude Include="src\DataTypes.h" />
     <ClInclude Include="src\GameData.h" />
+    <ClInclude Include="src\GameManager.h" />
     <ClInclude Include="src\TextTexture.h" />
     <ClInclude Include="src\RenderManager.h" />
     <ClInclude Include="src\Utils.h" />

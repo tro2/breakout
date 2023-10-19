@@ -21,7 +21,6 @@ void RenderManager::close(AppContext& appContext, Textures& textures) const
     textures.spacebarStartText.free();
     textures.victoryText.free();
     textures.restartText.free();
-    textures.scoreText.free();
 
     // Dealloc Fonts
     TTF_CloseFont(gFontRegular);
@@ -183,14 +182,32 @@ bool RenderManager::loadTextures(AppContext& appContext, Textures& textures) con
         success = false;
     }
 
-    if (!loadFromRenderedText(textures.scoreText, gFontRegular, "Player: 0 AI: 0", black
-        , appContext))
-    {
-        printf("Unable to load score text!\n");
-        success = false;
-    }
-
     return success;
+}
+
+void RenderManager::renderGame(const Textures& gTextures, GameState gState, GameObjects gObjects, AppContext& app)
+{
+    // Clear screen and prep for render pass
+    SDL_RenderClear(app.gameRenderer);
+    SDL_SetRenderDrawColor(app.gameRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+
+    // render game objects
+    renderRect(gObjects.bottomWall, green, app);
+    renderRect(gObjects.topWall, green, app);
+    renderRect(gObjects.leftWall, green, app);
+    renderRect(gObjects.rightWall, green, app);
+
+    renderRect(gObjects.paddle.paddleRect, blue, app);
+
+    renderRect(gObjects.ball.ballRect, black, app);
+
+    // render text
+    renderTexture(gTextures.victoryText, { 0.0f, -10.0f }, app);
+
+    SDL_SetRenderDrawColor(app.gameRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+
+    // Update screen
+    SDL_RenderPresent(app.gameRenderer);
 }
 
 void RenderManager::renderTexture(const TextTexture& lTexture, Vec2d position, AppContext& app
@@ -205,11 +222,11 @@ void RenderManager::renderTexture(const TextTexture& lTexture, Vec2d position, A
 
     // conv pos to rect origin at top left
     posI.x -= sizeI.x / 2;
-    posI.y -= sizeI.y / 2;
+    posI.y += sizeI.y / 2;
 
     // conv pos to relative to top left
     posI.x = app.WINDOW_SIZE.x / 2 + posI.x;
-    posI.y = app.WINDOW_SIZE.y / 2 + posI.y;
+    posI.y = app.WINDOW_SIZE.y / 2 - posI.y;
 
     SDL_Rect renderQuad = { posI.x, posI.y, sizeI.x, sizeI.y };
 
@@ -231,11 +248,11 @@ void RenderManager::renderRect(const MeshRect& mRect, const SDL_Color& color, Ap
 
     // conv pos to rect origin at top left
     posI.x -= sizeI.x / 2;
-    posI.y -= sizeI.y / 2;
+    posI.y += sizeI.y / 2;
 
     // conv pos to relative to top left
     posI.x = app.WINDOW_SIZE.x / 2 + posI.x;
-    posI.y = app.WINDOW_SIZE.y / 2 + posI.y;
+    posI.y = app.WINDOW_SIZE.y / 2 - posI.y;
     
     SDL_Rect renderQuad = { posI.x, posI.y, sizeI.x, sizeI.y };
     

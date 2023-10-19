@@ -10,6 +10,7 @@
 #include "GameData.h"
 #include "DataTypes.h"
 #include "RenderManager.h"
+#include "GameManager.h"
 
 // FUNCTIONS ====================================
 
@@ -23,9 +24,20 @@ int main(int, char**)
 {
     // INIT =====================================
     
+    // contains window and renderer data
     AppContext app;
-    RenderManager renderManager;
+
+    // contains all text textures
     Textures gameTextures;
+
+    // contains all game MeshRects
+    GameObjects gameObjects;
+
+    // handles loading and rendering assets
+    RenderManager renderManager;
+
+    // handles game object updates
+    GameManager gameManager;
     
     // Start SDL
     if (!init())
@@ -54,10 +66,18 @@ int main(int, char**)
         std::cout << "Failed to load textures!" << std::endl;
         return -1;
     }
-    
+
+    // load gameObjects
+    if (!gameManager.loadObjects(gameObjects))
+    {
+        std::cout << "Failed to load game objects!" << std::endl;
+        return -1;
+    }
+
     // FLAGS ====================================
 
     bool quit = false;
+    GameState currentState = GameState::READY;
 
     // GAME LOOP ================================
 
@@ -76,21 +96,17 @@ int main(int, char**)
 
         // INPUT ================================
 
+        // update gameState
+        PaddleMove paddleMove = PaddleMove::STILL;
+
         // UPDATE OBJECTS =======================
+        if (currentState == GameState::IN_GAME) // do I need this check? is this branching
+        {
+            gameManager.update(gameObjects, paddleMove);
+        }
 
         // RENDER ===============================
-
-        // Clear screen and prep for render pass
-        SDL_RenderClear(app.gameRenderer);
-        SDL_SetRenderDrawColor(app.gameRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-
-        renderManager.renderRect({{ 0.0f,0.0f },{ 100.0f,100.0f, }}, renderManager.red, app);
-        renderManager.renderTexture(gameTextures.victoryText, { 0.0f, 0.0f }, app);
-
-        SDL_SetRenderDrawColor(app.gameRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-
-        // Update screen
-        SDL_RenderPresent(app.gameRenderer);
+        renderManager.renderGame(gameTextures, currentState, gameObjects, app);
 
     }
 
