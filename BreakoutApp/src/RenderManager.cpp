@@ -6,6 +6,7 @@
 
 #include "Utils.h"
 #include "GameData.h"
+#include "Logger.h"
 
 RenderManager::RenderManager()
 {
@@ -42,7 +43,8 @@ bool RenderManager::init(AppContext& appContext) const
         , SDL_WINDOW_SHOWN);
     if (appContext.gameWindow == nullptr)
     {
-        std::cout << "Window could not be created! SDL Error: " << SDL_GetError() << std::endl;
+        std::string log = "Window could not be created! SDL Error:";
+        Logger::log(LogLevel::ERROR, log + SDL_GetError());
         return false;
     }
 
@@ -51,7 +53,8 @@ bool RenderManager::init(AppContext& appContext) const
         , SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (appContext.gameRenderer == nullptr)
     {
-        std::cout << "Renderer could not be created! SDL Error: " << SDL_GetError() << std::endl;
+        std::string log = "Renderer could not be created! SDL Error:";
+        Logger::log(LogLevel::ERROR, log + SDL_GetError());
         return false;
     }
 
@@ -66,14 +69,16 @@ bool RenderManager::loadFonts()
     gFontRegular = TTF_OpenFont("arial.ttf", 14);
     if (gFontRegular == nullptr)
     {
-        printf("Unable to load regular font! TTF Error: %s\n", TTF_GetError());
+        std::string log = "Unable to load regular font! SDL_ttf Error";
+        Logger::log(LogLevel::ERROR, log + TTF_GetError());
         success = false;
     }
 
     gFontBoldLarge = TTF_OpenFont("arial.ttf", 20);
     if (gFontBoldLarge == nullptr)
     {
-        printf("Unable to load large bold font! TTF Error: %s\n", TTF_GetError());
+        std::string log = "Unable to load large bold font! SDL_ttf Error";
+        Logger::log(LogLevel::ERROR, log + TTF_GetError());
         success = false;
     }
 
@@ -131,7 +136,8 @@ bool RenderManager::loadFromRenderedText(TextTexture& lTexture, TTF_Font* font, 
     SDL_Surface* textSurface = TTF_RenderText_Solid(font, textureText.c_str(), textColor);
     if (textSurface == nullptr)
     {
-        printf("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
+        std::string log = "Unable to render text surface! SDL_ttf Error:";
+        Logger::log(LogLevel::ERROR, log + TTF_GetError());
     }
     else
     {
@@ -139,7 +145,8 @@ bool RenderManager::loadFromRenderedText(TextTexture& lTexture, TTF_Font* font, 
         lTexture.setMTexture(SDL_CreateTextureFromSurface(appContext.gameRenderer, textSurface));
         if (lTexture.getMTexture() == nullptr)
         {
-            printf("Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError());
+            std::string log = "Unable to create texture from rendered text! SDL_ttf Error:";
+            Logger::log(LogLevel::ERROR, log + TTF_GetError());
         }
         else
         {
@@ -164,21 +171,24 @@ bool RenderManager::loadTextures(AppContext& appContext, Textures& textures) con
     if (!loadFromRenderedText(textures.spacebarStartText, gFontRegular
         , "Press Spacebar to start", black, appContext))
     {
-        printf("Unable to load test text!\n");
+        std::string log = "Unable to load test text!";
+        Logger::log(LogLevel::ERROR, log + TTF_GetError());
         success = false;
     }
 
     if (!loadFromRenderedText(textures.victoryText, gFontRegular, "Victory!", black
         , appContext))
     {
-        printf("Unable to load victory text!\n");
+        std::string log = "Unable to load viotory text!";
+        Logger::log(LogLevel::ERROR, log + TTF_GetError());
         success = false;
     }
 
     if (!loadFromRenderedText(textures.restartText, gFontRegular, "Press 'R' to restart..."
         , black, appContext))
     {
-        printf("Unable to load restart text!\n");
+        std::string log = "Unable to load restart text!";
+        Logger::log(LogLevel::ERROR, log + TTF_GetError());
         success = false;
     }
 
