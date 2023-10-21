@@ -52,4 +52,7 @@ public:
 
     // render given rectangle while adapting it to window size
     void renderRect(const MeshRect& mRect, const SDL_Color& color, AppContext& app);
+
+    // updates window size and scaling factor
+    void updateWindowSize(Vec2i newSize, AppContext& app);
 };

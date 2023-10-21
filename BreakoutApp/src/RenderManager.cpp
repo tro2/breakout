@@ -40,13 +40,18 @@ bool RenderManager::init(AppContext& appContext) const
     // create the window
     appContext.gameWindow = SDL_CreateWindow("Test Window", SDL_WINDOWPOS_UNDEFINED
         , SDL_WINDOWPOS_UNDEFINED, appContext.WINDOW_SIZE.x, appContext.WINDOW_SIZE.y
-        , SDL_WINDOW_SHOWN);
+        , SDL_WINDOW_SHOWN
+        | SDL_WINDOW_RESIZABLE);
     if (appContext.gameWindow == nullptr)
     {
         std::string log = "Window could not be created! SDL Error:";
         Logger::log(LogLevel::ERROR, log + SDL_GetError());
         return false;
     }
+
+    // set minimum window size to defaults
+    SDL_SetWindowMinimumSize(appContext.gameWindow
+        , appContext.WINDOW_SIZE.x, appContext.WINDOW_SIZE.y);
 
     // create renderer for the main window
     appContext.gameRenderer = SDL_CreateRenderer(appContext.gameWindow, -1
@@ -227,7 +232,7 @@ void RenderManager::renderTexture(const TextTexture& lTexture, Vec2d position, A
 
     // position is given relative to world origin in center and position marking center of mesh
     // size of texture is pixels
-    Vec2i posI = Utils::convVec(Utils::scaleVecD(position, app.UNITS_PER_PIXEL));
+    Vec2i posI = Utils::convVec(Utils::scaleVecD(position, app.PIXELS_PER_UNIT));
     Vec2i sizeI = lTexture.getSize();
 
     // conv pos to rect origin at top left
@@ -253,8 +258,8 @@ void RenderManager::renderTexture(const TextTexture& lTexture, Vec2d position, A
 void RenderManager::renderRect(const MeshRect& mRect, const SDL_Color& color, AppContext& app)
 {
     // position is given relative to world origin in center and position marking center of mesh
-    Vec2i posI = Utils::convVec(Utils::scaleVecD(mRect.position, app.UNITS_PER_PIXEL));
-    Vec2i sizeI = Utils::convVec(Utils::scaleVecD(mRect.size, app.UNITS_PER_PIXEL));
+    Vec2i posI = Utils::convVec(Utils::scaleVecD(mRect.position, app.PIXELS_PER_UNIT));
+    Vec2i sizeI = Utils::convVec(Utils::scaleVecD(mRect.size, app.PIXELS_PER_UNIT));
 
     // conv pos to rect origin at top left
     posI.x -= sizeI.x / 2;
@@ -269,4 +274,17 @@ void RenderManager::renderRect(const MeshRect& mRect, const SDL_Color& color, Ap
     SDL_SetRenderDrawColor(app.gameRenderer, color.r, color.g, color.b, color.a);
 
     SDL_RenderFillRect(app.gameRenderer, &renderQuad);
+}
+
+void RenderManager::updateWindowSize(Vec2i newSize, AppContext& app)
+{
+    double newScaleFactor = newSize.x / ARENA_SIZE.x;
+
+    if (ARENA_SIZE.y * newScaleFactor > newSize.y)
+    {
+        newScaleFactor = newSize.y / ARENA_SIZE.y;
+    }
+
+    app.WINDOW_SIZE = newSize;
+    app.PIXELS_PER_UNIT = newScaleFactor;
 }

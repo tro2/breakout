@@ -93,6 +93,10 @@ int main(int, char**)
             {
                 quit = true;
             }
+            else if (e.type == SDL_WINDOWEVENT && e.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
+            {
+                renderManager.updateWindowSize(Vec2i(e.window.data1, e.window.data2), app);
+            }
         }
 
         // INPUT ================================

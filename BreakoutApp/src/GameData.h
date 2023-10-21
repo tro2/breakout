@@ -22,7 +22,7 @@ struct AppContext {
     SDL_Renderer* gameRenderer = nullptr;
 
     Vec2i WINDOW_SIZE = { 720, 480 };
-    float UNITS_PER_PIXEL = 2.4f;
+    double PIXELS_PER_UNIT = WINDOW_SIZE.x/ARENA_SIZE.x;
 };
 
 struct Textures {
