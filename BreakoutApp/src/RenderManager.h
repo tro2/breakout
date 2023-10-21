@@ -10,29 +10,24 @@
 class RenderManager
 {
 public:
-
-    // Fonts
-    TTF_Font* gFontRegular;
-    TTF_Font* gFontBoldLarge;
-
     // Colors
     const SDL_Color black = { 0,0,0,0 };
     const SDL_Color red = { 255,0,0,0 };
     const SDL_Color blue = { 0,0,255,0 };
     const SDL_Color green = { 0,125,0,0 };
 
-    RenderManager();
+    RenderManager() {};
 
     ~RenderManager() {};
 
     // unloads all textures and app context
-    void close(AppContext& app, Textures& textures) const;
+    void close(AppContext& app, Textures& textures, Fonts& fonts) const;
 
     // inits game renderer and game window
     bool init(AppContext& app) const;
 
     // loads fonts and returns true if sucessful, false otherwise
-    bool loadFonts();
+    bool loadFonts(Fonts& fonts);
 
     // loads the image at specified path into given LTexture
     //bool loadFromFile(TextTexture& texture, std::string path, AppContext& app) const;
@@ -42,7 +37,7 @@ public:
         , SDL_Color textColor, AppContext& app) const;
 
     // loads game textures into Textures&
-    bool loadTextures(AppContext& app, Textures& textures) const;
+    bool loadTextures(AppContext& app, Textures& textures, Fonts& fonts) const;
 
     void renderGame(const Textures& gTextures, GameState gState, GameObjects gObjects, AppContext& app);
 

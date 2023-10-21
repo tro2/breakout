@@ -5,18 +5,9 @@
 #include <SDL_image.h>
 
 #include "Utils.h"
-#include "GameData.h"
 #include "Logger.h"
 
-RenderManager::RenderManager()
-{
-    // Fonts
-    TTF_Font* gFontRegular = nullptr;
-    TTF_Font* gFontBoldLarge = nullptr;
-
-}
-
-void RenderManager::close(AppContext& appContext, Textures& textures) const
+void RenderManager::close(AppContext& appContext, Textures& textures, Fonts& fonts) const
 {
     // Deallocate textures
     textures.spacebarStartText.free();
@@ -24,8 +15,8 @@ void RenderManager::close(AppContext& appContext, Textures& textures) const
     textures.restartText.free();
 
     // Dealloc Fonts
-    TTF_CloseFont(gFontRegular);
-    TTF_CloseFont(gFontBoldLarge);
+    TTF_CloseFont(fonts.gFontRegular);
+    TTF_CloseFont(fonts.gFontBoldLarge);
 
     SDL_DestroyRenderer(appContext.gameRenderer);
     appContext.gameRenderer = nullptr;
@@ -66,21 +57,21 @@ bool RenderManager::init(AppContext& appContext) const
     return true;
 }
 
-bool RenderManager::loadFonts()
+bool RenderManager::loadFonts(Fonts& fonts)
 {
     // load flag
     bool success = true;
 
-    gFontRegular = TTF_OpenFont("arial.ttf", 14);
-    if (gFontRegular == nullptr)
+    fonts.gFontRegular = TTF_OpenFont("arial.ttf", 14);
+    if (fonts.gFontRegular == nullptr)
     {
         std::string log = "Unable to load regular font! SDL_ttf Error";
         Logger::log(LogLevel::ERROR, log + TTF_GetError());
         success = false;
     }
 
-    gFontBoldLarge = TTF_OpenFont("arial.ttf", 20);
-    if (gFontBoldLarge == nullptr)
+    fonts.gFontBoldLarge = TTF_OpenFont("arial.ttf", 20);
+    if (fonts.gFontBoldLarge == nullptr)
     {
         std::string log = "Unable to load large bold font! SDL_ttf Error";
         Logger::log(LogLevel::ERROR, log + TTF_GetError());
@@ -88,7 +79,7 @@ bool RenderManager::loadFonts()
     }
 
     // set font to bold
-    TTF_SetFontStyle(gFontBoldLarge, TTF_STYLE_BOLD);
+    TTF_SetFontStyle(fonts.gFontBoldLarge, TTF_STYLE_BOLD);
 
     return success;
 }
@@ -167,13 +158,13 @@ bool RenderManager::loadFromRenderedText(TextTexture& lTexture, TTF_Font* font, 
     return lTexture.getMTexture() != nullptr;
 }
 
-bool RenderManager::loadTextures(AppContext& appContext, Textures& textures) const
+bool RenderManager::loadTextures(AppContext& appContext, Textures& textures, Fonts& fonts) const
 {
     // load flag
     bool success = true;
 
     // text textures
-    if (!loadFromRenderedText(textures.spacebarStartText, gFontRegular
+    if (!loadFromRenderedText(textures.spacebarStartText, fonts.gFontRegular
         , "Press Spacebar to start", black, appContext))
     {
         std::string log = "Unable to load test text!";
@@ -181,7 +172,7 @@ bool RenderManager::loadTextures(AppContext& appContext, Textures& textures) con
         success = false;
     }
 
-    if (!loadFromRenderedText(textures.victoryText, gFontRegular, "Victory!", black
+    if (!loadFromRenderedText(textures.victoryText, fonts.gFontRegular, "Victory!", black
         , appContext))
     {
         std::string log = "Unable to load viotory text!";
@@ -189,7 +180,7 @@ bool RenderManager::loadTextures(AppContext& appContext, Textures& textures) con
         success = false;
     }
 
-    if (!loadFromRenderedText(textures.restartText, gFontRegular, "Press 'R' to restart..."
+    if (!loadFromRenderedText(textures.restartText, fonts.gFontRegular, "Press 'R' to restart..."
         , black, appContext))
     {
         std::string log = "Unable to load restart text!";

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SDL.h>
+#include <SDL_ttf.h>
 
 #include <array>
 
@@ -50,4 +51,10 @@ struct GameObjects {
     // obstacles
     std::array<MeshRect, 10> obstacles{};
 
+};
+
+struct Fonts {
+
+    TTF_Font* gFontRegular;
+    TTF_Font* gFontBoldLarge;
 };

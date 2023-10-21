@@ -63,7 +63,7 @@ SDL_Rect Utils::convMeshRect(const MeshRect& mRect)
     return rect;
 }
 
-Vec2d Utils::scaleVecD(const Vec2d& vecD, float scalar)
+Vec2d Utils::scaleVecD(const Vec2d& vecD, double scalar)
 {
     return { vecD.x * scalar, vecD.y * scalar };
 }

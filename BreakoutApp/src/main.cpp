@@ -31,6 +31,9 @@ int main(int, char**)
     // contains all text textures
     Textures gameTextures;
 
+    // contains fonts
+    Fonts fonts;
+
     // contains all game MeshRects
     GameObjects gameObjects;
 
@@ -55,14 +58,14 @@ int main(int, char**)
     }
 
     // Load fonts
-    if (!renderManager.loadFonts())
+    if (!renderManager.loadFonts(fonts))
     {
         Logger::log(LogLevel::ERROR, "Failed to load fonts!");
         return -1;
     }
 
     // load initial textures
-    if (!renderManager.loadTextures(app, gameTextures))
+    if (!renderManager.loadTextures(app, gameTextures, fonts))
     {
         Logger::log(LogLevel::ERROR, "Failed to load textures!");
         return -1;

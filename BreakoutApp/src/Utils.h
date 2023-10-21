@@ -25,7 +25,7 @@ namespace Utils
 
     SDL_Rect convMeshRect(const MeshRect& mRect);
 
-    Vec2d scaleVecD(const Vec2d& vecD, float scalar);
+    Vec2d scaleVecD(const Vec2d& vecD, double scalar);
 
     Vec2i scaleVecI(const Vec2i& vecI, float scalar);
 }
