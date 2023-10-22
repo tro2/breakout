@@ -129,9 +129,11 @@ int main(int, char**)
             currentState = GameState::IN_GAME;
 
             // launch ball
-
+            // HACK set ball y velocity to max to launch it straight up
+            // this would ideally be handled by the game manager, but no event system
+            gameObjects.ball.velocity.y = BALL_VELOCITY;
         }
-        else if (currentState == GameState::IN_GAME)
+        else if (currentState != GameState::VICTORY)
         {
             // check left and right, update paddleMove
             if (currentKeyboardState[SDL_SCANCODE_LEFT])
@@ -145,10 +147,7 @@ int main(int, char**)
         }
 
         // UPDATE OBJECTS =======================
-        if (currentState == GameState::IN_GAME)
-        {
-            gameManager.update(gameObjects, currentState, paddleMove, timeStep);
-        }
+        gameManager.update(gameObjects, currentState, paddleMove, timeStep);
 
         // RENDER ===============================
         renderManager.renderGame(gameTextures, currentState, gameObjects, app);

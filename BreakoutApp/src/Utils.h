@@ -5,6 +5,7 @@
 //#include <SDL.h>
 
 #include "DataTypes.h"
+#include "GameData.h"
 
 namespace Utils
 {
@@ -27,18 +28,22 @@ namespace Utils
 
     // PHYSICS ==================================
     
-    // calculates final remaining move of the ball after it bounces off given obstacle
-    // updates ball velocity
-    Vec2d calcElasticBounce(MoveableMRect& ball, const MeshRect& obstacle);
+    // simulates elastic collision with a stationary obstacle
+    // updates mObject velocity to velocity after collision
+    // returns remaining movement
+    Vec2d calcElasticBounce(MoveableMRect& mObject, const MeshRect& obstacle);
 
-    // updates paddle velocity after collision with wall, returns Vec2d of 0,0
-    Vec2d calcStaticBounce(MoveableMRect& paddle, const MeshRect& obstacle);
+    // simulates inelastic collision with a stationary obstacle
+    // updates mObject velocity to 0
+    // returns remaining movement of 0
+    Vec2d calcStaticBounce(MoveableMRect& mObject, const MeshRect& obstacle);
 
     // checks collisions between 2 rects
     bool checkCollision(const MeshRect& a, const MeshRect& b);
 
-    void moveElasticBounce(MoveableMRect& object, std::vector<MeshRect*> objectArr, double timeStep);
+    // void moveElasticBounce(MoveableMRect& mObject, std::vector<MeshRect*> objectArr, double timeStep);
+    void moveElasticBounce(MoveableMRect& mObject, Vec2d movement, std::vector<MeshRect*> objectArr);
 
-    void moveStaticBounce(MoveableMRect& object, std::vector<MeshRect*> objectArr, double timeStep);
+    void moveStaticBounce(MoveableMRect& mObject, std::vector<MeshRect*> objectArr, double timeStep);
 
 }

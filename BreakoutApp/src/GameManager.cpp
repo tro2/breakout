@@ -1,5 +1,7 @@
 #include "GameManager.h"
 
+#include <vector>
+
 #include "Utils.h"
 
 bool GameManager::loadObjects(GameObjects& gObjects)
@@ -33,13 +35,29 @@ bool GameManager::loadObjects(GameObjects& gObjects)
 
 void GameManager::update(GameObjects& gObjects, GameState& gameState, PaddleMove& paddleMove, double timeStep)
 {
+    // PADDLE ===================================
     // move paddle and check collisions with walls
     gObjects.paddle.velocity.x = (paddleMove - 1) * PADDLE_VELOCITY;
     std::vector<MeshRect*> vec = { &gObjects.leftWall, &gObjects.rightWall };
     Utils::moveStaticBounce(gObjects.paddle, vec, timeStep);
-    // reset paddleMove
+    // reset paddleMove because otherwise paddle moves continously in direction last given
+    // 
     paddleMove = PaddleMove::STILL;
 
-
-    // move ball and check collisions with
+    // BALL =====================================
+    // move ball around for launching
+    if (gameState == GameState::READY)
+    {
+        // move ball with paddle
+        gObjects.ball.mRect.position.x = gObjects.paddle.mRect.position.x;
+    }
+    else if (gameState == GameState::IN_GAME)
+    {
+        vec.push_back(&gObjects.topWall);
+        vec.push_back(&gObjects.bottomWall);
+        vec.push_back(&gObjects.paddle.mRect);
+        // move ball and check collisions with GameObjects
+        Utils::moveElasticBounce(gObjects.ball, gObjects.ball.velocity * timeStep, vec);
+    }
+    
 }

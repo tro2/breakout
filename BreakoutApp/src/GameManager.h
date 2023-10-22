@@ -1,8 +1,5 @@
 #pragma once
 
-#include <functional>
-#include <vector>
-
 #include "DataTypes.h"
 #include "GameData.h"
 

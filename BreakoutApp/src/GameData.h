@@ -13,10 +13,12 @@ const Vec2d ARENA_SIZE = { 300.f, 200.f };
 const double WALL_WIDTH = 5.f;
 
 const Vec2d BALL_SIZE = Vec2d(5.f, 5.f);
-const double BALL_VELOCITY = 30.f;
+const double BALL_VELOCITY = 80.f;
 
 const Vec2d PADDLE_SIZE = Vec2d(50.f, 5.f);
 const double PADDLE_VELOCITY = 100.f;
+
+const int INITIAL_TARGETS = 10;
 
 // STRUCTS ======================================
 
@@ -52,7 +54,7 @@ struct GameObjects {
     MoveableMRect ball;
     
     // obstacles
-    std::array<MeshRect, 10> obstacles{};
+    std::array<MeshRect, INITIAL_TARGETS> obstacles{};
 
 };
 
