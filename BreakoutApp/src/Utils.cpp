@@ -192,21 +192,6 @@ bool Utils::checkCollision(const MeshRect& a, const MeshRect& b)
     return true;
 }
 
-//void Utils::moveElasticBounce(MoveableMRect& object, std::vector<MeshRect*> objectArr, double timeStep)
-//{
-//    object.mRect.position += object.velocity * timeStep;
-//
-//    for (auto it = objectArr.begin(); it != objectArr.end(); ++it)
-//    {
-//        if (checkCollision(object.mRect, **it))
-//        {
-//            Utils::calcElasticBounce(object, **it);
-//
-//            // TODO need to loop until all possible collisions are resolved
-//        }
-//    }
-//}
-
 void Utils::moveElasticBounce(MoveableMRect& object, Vec2d movement, std::vector<MeshRect*> objectArr)
 {
     if (movement.x == 0.f && movement.y == 0.f)
