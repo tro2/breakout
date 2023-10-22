@@ -81,7 +81,7 @@ int main(int, char**)
     // FLAGS ====================================
 
     bool quit = false;
-    GameState currentState = GameState::READY;
+    GameState currentState = GameState::IN_GAME;
 
     // GAME LOOP ================================
 
@@ -108,7 +108,7 @@ int main(int, char**)
         PaddleMove paddleMove = PaddleMove::STILL;
 
         // UPDATE OBJECTS =======================
-        if (currentState == GameState::IN_GAME) // do I need this check? is this branching
+        if (currentState == GameState::IN_GAME)
         {
             gameManager.update(gameObjects, paddleMove);
         }
