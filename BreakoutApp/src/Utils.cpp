@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include <random>
+#include <sstream>
 
 #include "Logger.h"
 
@@ -69,30 +70,34 @@ SDL_Rect Utils::convMeshRect(const MeshRect& mRect)
 Vec2d Utils::calcElasticBounce(MoveableMRect& mObject, const MeshRect& obstacle)
 {
     // determine direction of movement
-    int directionX = (mObject.velocity.x > 0) ? -1 : 1;
-    int directionY = (mObject.velocity.y > 0) ? -1 : 1;
+    int directionX = (mObject.velocity.x > 0) ? 1 : -1;
+    int directionY = (mObject.velocity.y > 0) ? 1 : -1;
 
     // figure out how much to move back in x direction
     double moveBackX = 0.f;
     if (mObject.velocity.x != 0)
     {
-        moveBackX = (obstacle.size.x / 2.f + mObject.mRect.size.x / 2.f) * directionX;
-        mObject.mRect.position.x = obstacle.position.x + moveBackX;
+        // moveback = obstacle posx
+        
+        double distanceBetween = obstacle.size.x / 2.f + mObject.mRect.size.x / 2.f;
+        moveBackX = -directionX * distanceBetween - obstacle.position.x - mObject.mRect.position.x;
+        mObject.mRect.position.x = obstacle.position.x + distanceBetween * -directionX;
     }
 
     // figure out how much to move back in y direction
     double moveBackY = 0.f;
     if (mObject.velocity.y != 0)
     {
-        moveBackY = (obstacle.size.y / 2.f + mObject.mRect.size.y / 2.f) * directionY;
-        mObject.mRect.position.y = obstacle.position.y + moveBackY;
+        double distanceBetween = obstacle.size.y / 2.f + mObject.mRect.size.y / 2.f;
+        moveBackY = -directionY * (obstacle.position.y - mObject.mRect.position.y) + distanceBetween;
+        mObject.mRect.position.y = obstacle.position.y + distanceBetween * -directionY;
     }
 
     // update velocity
     mObject.velocity.x *= -1;
     mObject.velocity.y *= -1;
     
-    return { moveBackX,moveBackY };
+    return { -1 * directionX * moveBackX, -1 * directionY * moveBackY };
 }
 
 
@@ -216,6 +221,11 @@ void Utils::moveElasticBounce(MoveableMRect& object, Vec2d movement, std::vector
         if (checkCollision(object.mRect, **it))
         {
             movement = Utils::calcElasticBounce(object, **it);
+            
+            std::stringstream msg;
+            msg << "Movement after collision: " << movement.y;
+
+            Logger::log(LogLevel::DEBUG, msg.str());
 
             moveElasticBounce(object, movement, objectArr);
         }
