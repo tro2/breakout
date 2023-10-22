@@ -30,6 +30,16 @@ bool GameManager::loadObjects(GameObjects& gObjects)
     gObjects.paddle.mRect = { {0.f, -ARENA_SIZE.y / 2.f + WALL_WIDTH + PADDLE_SIZE.y / 2.f}, PADDLE_SIZE};
     gObjects.paddle.velocity = { 0.f, 0.f };
 
+    // obstacles
+    for (auto it = gObjects.obstacles.begin(); it != gObjects.obstacles.end(); ++it)
+    {
+        Vec2d position;
+
+        // TODO spread out the obstacles
+        
+        *it = MeshRect(position, Vec2d(10.f,10.f));
+    }
+
     return true;
 }
 
@@ -55,9 +65,15 @@ void GameManager::update(GameObjects& gObjects, GameState& gameState, PaddleMove
     {
         vec.push_back(&gObjects.topWall);
         vec.push_back(&gObjects.bottomWall);
-        vec.push_back(&gObjects.paddle.mRect);
+
+        for (auto it = gObjects.obstacles.begin(); it != gObjects.obstacles.end(); ++it)
+        {
+            vec.push_back(&*it);
+        }
         // move ball and check collisions with GameObjects
         Utils::moveElasticBounce(gObjects.ball, gObjects.ball.velocity * timeStep, vec);
+
+        // TODO separate ball collision with paddle
     }
     
 }

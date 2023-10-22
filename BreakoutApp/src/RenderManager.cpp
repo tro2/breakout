@@ -207,6 +207,11 @@ void RenderManager::renderGame(const Textures& gTextures, GameState gState, Game
 
     renderRect(gObjects.ball.mRect, black, app);
 
+    for (auto it = gObjects.obstacles.begin(); it != gObjects.obstacles.end(); ++it)
+    {
+        renderRect(*it, blue, app);
+    }
+
     // render text
     switch (gState) {
     case READY:
