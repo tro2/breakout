@@ -6,25 +6,27 @@ bool GameManager::loadObjects(GameObjects& gObjects)
 {
 	// game Arena
 	gObjects.bottomWall 
-        = MeshRect(Vec2d(0.0f, -ARENA_SIZE.y / 2.0f + WALL_WIDTH / 2.0f)
+        = MeshRect(Vec2d(0.f, -ARENA_SIZE.y / 2.f + WALL_WIDTH / 2.f)
         , Vec2d(ARENA_SIZE.x, WALL_WIDTH));
 	gObjects.topWall 
-        = MeshRect(Vec2d(0.0f, ARENA_SIZE.y / 2.0f - WALL_WIDTH / 2.0f)
+        = MeshRect(Vec2d(0.f, ARENA_SIZE.y / 2.f - WALL_WIDTH / 2.f)
         , Vec2d(ARENA_SIZE.x, WALL_WIDTH));
 	gObjects.leftWall 
-        = MeshRect(Vec2d(-ARENA_SIZE.x / 2.0f + WALL_WIDTH / 2.0f, 0.0f)
+        = MeshRect(Vec2d(-ARENA_SIZE.x / 2.f + WALL_WIDTH / 2.f, 0.f)
         , Vec2d(WALL_WIDTH, ARENA_SIZE.y));
 	gObjects.rightWall 
-        = MeshRect(Vec2d(ARENA_SIZE.x / 2.0f - WALL_WIDTH / 2.0f, 0.0f)
+        = MeshRect(Vec2d(ARENA_SIZE.x / 2.f - WALL_WIDTH / 2.f, 0.f)
         , Vec2d(WALL_WIDTH, ARENA_SIZE.y));
 
 	// ball
-	gObjects.ball.ballRect = MeshRect(Vec2d(50.0f, 50.0f), Vec2d(10.0f, 10.0f));
-	gObjects.ball.velocity = Vec2d(0.0f, 0.0f);
+	gObjects.ball.ballRect = MeshRect(
+          Vec2d(0.f, -ARENA_SIZE.y / 2.f + WALL_WIDTH + PADDLE_SIZE.y + BALL_SIZE.y / 2.f)
+        , BALL_SIZE);
+	gObjects.ball.velocity = Vec2d(0.f, 0.f);
 
 	// paddle
-	gObjects.paddle.paddleRect = { {0.0f, -100.0f},{50.0f, 5.0f} };
-	gObjects.paddle.velocity = { 0.0f, 0.0f };
+	gObjects.paddle.paddleRect = { {0.f, -ARENA_SIZE.y / 2.f + WALL_WIDTH + PADDLE_SIZE.y / 2.f}, PADDLE_SIZE};
+	gObjects.paddle.velocity = { 0.f, 0.f };
 
 	return true;
 }
@@ -38,7 +40,7 @@ void GameManager::update(GameObjects& gObjects, PaddleMove paddleMove)
 
 Vec2d GameManager::calcElasticBounce(MeshRect ball, MeshRect obstacle)
 {
-	return { 0.0f,0.0f };
+	return { 0.f,0.f };
 }
 
 bool GameManager::checkCollision(MeshRect a, MeshRect b)

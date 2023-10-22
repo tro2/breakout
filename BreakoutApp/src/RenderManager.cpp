@@ -208,7 +208,15 @@ void RenderManager::renderGame(const Textures& gTextures, GameState gState, Game
     renderRect(gObjects.ball.ballRect, black, app);
 
     // render text
-    renderTexture(gTextures.victoryText, { 0.0f, -10.0f }, app);
+    switch (gState) {
+    case READY:
+        renderTexture(gTextures.spacebarStartText, Vec2d(0.f, 15.f), app);
+        break;
+    case VICTORY:
+        renderTexture(gTextures.spacebarStartText, Vec2d(0.f, 15.f), app);
+        renderTexture(gTextures.victoryText, Vec2d(0.f, -15.f), app);
+        break;
+    }
 
     SDL_SetRenderDrawColor(app.gameRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 

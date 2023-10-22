@@ -4,7 +4,7 @@ struct Vec2d {
     double x;
     double y;
 
-    Vec2d() : x(0.0f), y(0.0f) {}
+    Vec2d() : x(0.f), y(0.f) {}
     Vec2d(double x, double y) : x(x), y(y) {}
 };
 
