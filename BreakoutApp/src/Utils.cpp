@@ -125,19 +125,21 @@ bool Utils::checkCollision(const MeshRect& a, const MeshRect& b)
     topB = b.position.y + b.size.y / 2.f;
     bottomB = b.position.y - b.size.y / 2.f;
 
-    // if vertical bounds do not overlap
-    if (bottomA > topB && topA < bottomB)
+    // if x bounds don't overlap
+    if (rightA < leftB 
+        || leftA > rightB)
     {
-        return true;
+        return false;
     }
 
-    // if horizontal bounds do not overlap
-    if (rightA > leftB && leftA < rightB)
+    // if y bounds don't overlap
+    if (bottomA > topB
+        || topA < bottomB)
     {
-        return true;
+        return false;
     }
 
-    // both horizontal and vertical bounds overlap
+    // do overlap in both dimensions
     return true;
 }
 
@@ -156,7 +158,6 @@ void Utils::moveStaticBounce(MoveableMRect& object, std::vector<MeshRect*> objec
     {
         if (checkCollision(object.mRect, **it))
         {
-            Logger::log(LogLevel::DEBUG, "Collision detected");
             Utils::calcStaticBounce(object, **it);
 
             // TODO need to loop until all possible collisions are resolved
