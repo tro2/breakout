@@ -6,6 +6,20 @@ struct Vec2d {
 
     Vec2d() : x(0.f), y(0.f) {}
     Vec2d(double x, double y) : x(x), y(y) {}
+
+    Vec2d& operator +=(const Vec2d& v)
+    {
+        x += v.x;
+        y += v.y;
+        return (*this);
+    }
+
+    Vec2d& operator -=(const Vec2d& v)
+    {
+        x -= v.x;
+        y -= v.y;
+        return (*this);
+    }
 };
 
 struct Vec2i {
@@ -24,20 +38,12 @@ struct MeshRect {
     MeshRect(Vec2d pos, Vec2d size) : position(pos), size(size) {}
 };
 
-struct Paddle {
-    MeshRect paddleRect;
+struct MoveableMRect {
+    MeshRect mRect;
     Vec2d velocity;
 
-    Paddle() : paddleRect(), velocity() {}
-    Paddle(MeshRect mRect, Vec2d vel) : paddleRect(mRect), velocity(vel) {}
-};
-
-struct Ball {
-    MeshRect ballRect;
-    Vec2d velocity;
-
-    Ball() : ballRect(), velocity() {}
-    Ball(MeshRect mRect, Vec2d vel) : ballRect(mRect), velocity(vel) {}
+    MoveableMRect() : mRect(), velocity() {}
+    MoveableMRect(MeshRect mRect, Vec2d vel) : mRect(mRect), velocity(vel) {}
 };
 
 enum GameState
@@ -49,7 +55,7 @@ enum GameState
 
 enum PaddleMove
 {
-    STILL,
     LEFT,
+    STILL,
     RIGHT
 };

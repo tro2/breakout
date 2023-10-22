@@ -203,9 +203,9 @@ void RenderManager::renderGame(const Textures& gTextures, GameState gState, Game
     renderRect(gObjects.leftWall, green, app);
     renderRect(gObjects.rightWall, green, app);
 
-    renderRect(gObjects.paddle.paddleRect, blue, app);
+    renderRect(gObjects.paddle.mRect, blue, app);
 
-    renderRect(gObjects.ball.ballRect, black, app);
+    renderRect(gObjects.ball.mRect, black, app);
 
     // render text
     switch (gState) {

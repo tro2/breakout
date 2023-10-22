@@ -19,13 +19,14 @@ bool GameManager::loadObjects(GameObjects& gObjects)
         , Vec2d(WALL_WIDTH, ARENA_SIZE.y));
 
 	// ball
-	gObjects.ball.ballRect = MeshRect(
+    gObjects.ball.mRect = MeshRect(
           Vec2d(0.f, -ARENA_SIZE.y / 2.f + WALL_WIDTH + PADDLE_SIZE.y + BALL_SIZE.y / 2.f)
         , BALL_SIZE);
 	gObjects.ball.velocity = Vec2d(0.f, 0.f);
 
 	// paddle
-	gObjects.paddle.paddleRect = { {0.f, -ARENA_SIZE.y / 2.f + WALL_WIDTH + PADDLE_SIZE.y / 2.f}, PADDLE_SIZE};
+    gObjects.paddle.mRect = { {ARENA_SIZE.x / 2.f, -ARENA_SIZE.y / 2.f + WALL_WIDTH + PADDLE_SIZE.y / 2.f}, PADDLE_SIZE};
+    //gObjects.paddle.mRect = { {0.f, -ARENA_SIZE.y / 2.f + WALL_WIDTH + PADDLE_SIZE.y / 2.f}, PADDLE_SIZE};
 	gObjects.paddle.velocity = { 0.f, 0.f };
 
 	return true;
