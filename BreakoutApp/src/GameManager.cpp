@@ -25,19 +25,20 @@ bool GameManager::loadObjects(GameObjects& gObjects)
     gObjects.ball.velocity = Vec2d(0.f, 0.f);
 
     // paddle
-    gObjects.paddle.mRect = { {ARENA_SIZE.x / 2.f, -ARENA_SIZE.y / 2.f + WALL_WIDTH + PADDLE_SIZE.y / 2.f}, PADDLE_SIZE};
-    //gObjects.paddle.mRect = { {0.f, -ARENA_SIZE.y / 2.f + WALL_WIDTH + PADDLE_SIZE.y / 2.f}, PADDLE_SIZE};
+    gObjects.paddle.mRect = { {0.f, -ARENA_SIZE.y / 2.f + WALL_WIDTH + PADDLE_SIZE.y / 2.f}, PADDLE_SIZE};
     gObjects.paddle.velocity = { 0.f, 0.f };
 
     return true;
 }
 
-void GameManager::update(GameObjects& gObjects, PaddleMove paddleMove)
+void GameManager::update(GameObjects& gObjects, GameState& gameState, PaddleMove& paddleMove)
 {
     // move paddle and check collisions with walls
     gObjects.paddle.velocity.x = (paddleMove - 1) * PADDLE_VELOCITY;
     std::vector<MeshRect*> vec = { &gObjects.leftWall, &gObjects.rightWall };
     Utils::moveStaticBounce(gObjects.paddle, vec);
+    // reset paddleMove
+    paddleMove = PaddleMove::STILL;
 
 
     // move ball and check collisions with

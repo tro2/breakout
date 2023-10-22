@@ -81,7 +81,8 @@ int main(int, char**)
     // FLAGS ====================================
 
     bool quit = false;
-    GameState currentState = GameState::IN_GAME;
+    GameState currentState = GameState::READY;
+    PaddleMove paddleMove = PaddleMove::STILL;
 
     // GAME LOOP ================================
 
@@ -103,14 +104,43 @@ int main(int, char**)
         }
 
         // INPUT ================================
+        
+        const Uint8* currentKeyboardState = SDL_GetKeyboardState(nullptr);
 
-        // update gameState
-        PaddleMove paddleMove = PaddleMove::STILL;
+        // restart game
+        if (currentKeyboardState[SDL_SCANCODE_R])
+        {
+            // set flag
+            currentState = GameState::READY;
+
+            // reset objects
+            gameManager.loadObjects(gameObjects);
+        }
+        else if (currentState == GameState::READY && currentKeyboardState[SDL_SCANCODE_SPACE])
+        {
+            // set flag
+            currentState = GameState::IN_GAME;
+
+            // launch ball
+
+        }
+        else if (currentState == GameState::IN_GAME)
+        {
+            // check left and right, update paddleMove
+            if (currentKeyboardState[SDL_SCANCODE_LEFT])
+            {
+                paddleMove = PaddleMove::LEFT;
+            }
+            else if (currentKeyboardState[SDL_SCANCODE_RIGHT])
+            {
+                paddleMove = PaddleMove::RIGHT;
+            }
+        }
 
         // UPDATE OBJECTS =======================
         if (currentState == GameState::IN_GAME)
         {
-            gameManager.update(gameObjects, paddleMove);
+            gameManager.update(gameObjects, currentState, paddleMove);
         }
 
         // RENDER ===============================
