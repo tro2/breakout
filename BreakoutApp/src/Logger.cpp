@@ -11,7 +11,7 @@ void Logger::log(LogLevel level, const std::string& message)
     auto time = std::chrono::system_clock::now();
     std::time_t currentTime = std::chrono::system_clock::to_time_t(time);
 
-    std::cout << currentDateTime() << " " << levelArr[level] << message << std::endl;
+    std::cout << currentDateTime() << " " << levelArr[level] << " " << message << std::endl;
 }
 
 const std::string Logger::currentDateTime()
