@@ -12,6 +12,7 @@
 #include "RenderManager.h"
 #include "GameManager.h"
 #include "Logger.h"
+#include "LTimer.h"
 
 // FUNCTIONS ====================================
 
@@ -86,11 +87,17 @@ int main(int, char**)
 
     // GAME LOOP ================================
 
+    // Delta timer
+    LTimer deltaTimer;
+    double timeStep = 0.f;
+
     // event storage
     SDL_Event e;
 
     while (!quit)
     {
+        deltaTimer.start();
+        
         while (SDL_PollEvent(&e) != 0)
         {
             if (e.type == SDL_QUIT)
@@ -140,12 +147,14 @@ int main(int, char**)
         // UPDATE OBJECTS =======================
         if (currentState == GameState::IN_GAME)
         {
-            gameManager.update(gameObjects, currentState, paddleMove);
+            gameManager.update(gameObjects, currentState, paddleMove, timeStep);
         }
 
         // RENDER ===============================
         renderManager.renderGame(gameTextures, currentState, gameObjects, app);
 
+        // update timestep for next loop
+        timeStep = deltaTimer.getTicks() / 1000.0;
     }
 
     // CLOSE ====================================

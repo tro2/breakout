@@ -20,6 +20,11 @@ struct Vec2d {
         y -= v.y;
         return (*this);
     }
+
+    Vec2d operator *(double s) const
+    {
+        return Vec2d(x*s, y*s);
+    }
 };
 
 struct Vec2i {

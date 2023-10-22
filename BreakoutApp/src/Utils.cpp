@@ -66,16 +66,6 @@ Vec2i Utils::convVec(const Vec2d& vecD)
 //    return rect;
 //}
 
-Vec2d Utils::scaleVecD(const Vec2d& vecD, double scalar)
-{
-    return { vecD.x * scalar, vecD.y * scalar };
-}
-
-Vec2i Utils::scaleVecI(const Vec2i& vecI, float scalar)
-{
-    return { Utils::roundDtoI(vecI.x * scalar), Utils::roundDtoI(vecI.y * scalar) };
-}
-
 Vec2d Utils::calcElasticBounce(MoveableMRect& ball, const MeshRect& obstacle)
 {
     return { 0.f,0.f };
@@ -143,16 +133,16 @@ bool Utils::checkCollision(const MeshRect& a, const MeshRect& b)
     return true;
 }
 
-void Utils::moveElasticBounce(MoveableMRect& object, std::vector<MeshRect*> objectArr)
+void Utils::moveElasticBounce(MoveableMRect& object, std::vector<MeshRect*> objectArr, double timeStep)
 {
     return;
 }
 
-void Utils::moveStaticBounce(MoveableMRect& object, std::vector<MeshRect*> objectArr)
+void Utils::moveStaticBounce(MoveableMRect& object, std::vector<MeshRect*> objectArr, double timeStep)
 {
     Vec2d oldPosition = object.mRect.position;
 
-    object.mRect.position += object.velocity;
+    object.mRect.position += object.velocity * timeStep;
 
     for (auto it = objectArr.begin(); it != objectArr.end(); ++it)
     {

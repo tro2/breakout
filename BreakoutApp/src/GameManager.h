@@ -13,5 +13,5 @@ public:
 	bool loadObjects(GameObjects& gObjects);
 
 	// updates all game objects
-	void update(GameObjects& gObjects, GameState& gameState, PaddleMove& paddleMove);
+	void update(GameObjects& gObjects, GameState& gameState, PaddleMove& paddleMove, double timeStep);
 };

@@ -31,12 +31,12 @@ bool GameManager::loadObjects(GameObjects& gObjects)
     return true;
 }
 
-void GameManager::update(GameObjects& gObjects, GameState& gameState, PaddleMove& paddleMove)
+void GameManager::update(GameObjects& gObjects, GameState& gameState, PaddleMove& paddleMove, double timeStep)
 {
     // move paddle and check collisions with walls
     gObjects.paddle.velocity.x = (paddleMove - 1) * PADDLE_VELOCITY;
     std::vector<MeshRect*> vec = { &gObjects.leftWall, &gObjects.rightWall };
-    Utils::moveStaticBounce(gObjects.paddle, vec);
+    Utils::moveStaticBounce(gObjects.paddle, vec, timeStep);
     // reset paddleMove
     paddleMove = PaddleMove::STILL;
 

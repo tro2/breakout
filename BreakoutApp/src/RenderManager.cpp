@@ -231,7 +231,7 @@ void RenderManager::renderTexture(const TextTexture& lTexture, Vec2d position, A
 
     // position is given relative to world origin in center and position marking center of mesh
     // size of texture is pixels
-    Vec2i posI = Utils::convVec(Utils::scaleVecD(position, app.PIXELS_PER_UNIT));
+    Vec2i posI = Utils::convVec(position * app.PIXELS_PER_UNIT);
     Vec2i sizeI = lTexture.getSize();
 
     // conv pos to rect origin at top left
@@ -285,8 +285,8 @@ void RenderManager::renderTexture(const TextTexture& lTexture, Vec2d position, A
 void RenderManager::renderRect(const MeshRect& mRect, const SDL_Color& color, AppContext& app)
 {
     // position is given relative to world origin in center and position marking center of mesh
-    Vec2d posD = Utils::scaleVecD(mRect.position, app.PIXELS_PER_UNIT);
-    Vec2d sizeD = Utils::scaleVecD(mRect.size, app.PIXELS_PER_UNIT);
+    Vec2d posD = mRect.position * app.PIXELS_PER_UNIT;
+    Vec2d sizeD = mRect.size * app.PIXELS_PER_UNIT;
 
     // conv pos to rect origin at top left
     posD.x -= sizeD.x / 2;

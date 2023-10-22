@@ -224,6 +224,7 @@ xcopy "$(ProjectDir)..\Dependencies\SDL_mixer\lib\$(Platform)\SDL2_mixer.dll" "$
   <ItemGroup>
     <ClCompile Include="src\GameManager.cpp" />
     <ClCompile Include="src\Logger.cpp" />
+    <ClCompile Include="src\LTimer.cpp" />
     <ClCompile Include="src\TextTexture.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\RenderManager.cpp" />
@@ -234,6 +235,7 @@ xcopy "$(ProjectDir)..\Dependencies\SDL_mixer\lib\$(Platform)\SDL2_mixer.dll" "$
     <ClInclude Include="src\GameData.h" />
     <ClInclude Include="src\GameManager.h" />
     <ClInclude Include="src\Logger.h" />
+    <ClInclude Include="src\LTimer.h" />
     <ClInclude Include="src\TextTexture.h" />
     <ClInclude Include="src\RenderManager.h" />
     <ClInclude Include="src\Utils.h" />

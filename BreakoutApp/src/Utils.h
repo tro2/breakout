@@ -25,12 +25,6 @@ namespace Utils
 
     //SDL_Rect convMeshRect(const MeshRect& mRect);
 
-    // TODO make this into a class function
-    Vec2d scaleVecD(const Vec2d& vecD, double scalar);
-    // TODO make this into a class function
-    Vec2i scaleVecI(const Vec2i& vecI, float scalar);
-
-
     // PHYSICS ==================================
     
     // calculates final remaining move of the ball after it bounces off given obstacle
@@ -43,8 +37,8 @@ namespace Utils
     // checks collisions between 2 rects
     bool checkCollision(const MeshRect& a, const MeshRect& b);
 
-    void moveElasticBounce(MoveableMRect& object, std::vector<MeshRect*> objectArr);
+    void moveElasticBounce(MoveableMRect& object, std::vector<MeshRect*> objectArr, double timeStep);
 
-    void moveStaticBounce(MoveableMRect& object, std::vector<MeshRect*> objectArr);
+    void moveStaticBounce(MoveableMRect& object, std::vector<MeshRect*> objectArr, double timeStep);
 
 }
