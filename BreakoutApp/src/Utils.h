@@ -2,7 +2,7 @@
 
 #include <vector>
 
-//#include <SDL.h>
+#include <SDL.h>
 
 #include "DataTypes.h"
 #include "GameData.h"
@@ -24,7 +24,7 @@ namespace Utils
 
     Vec2i convVec(const Vec2d& vecD);
 
-    //SDL_Rect convMeshRect(const MeshRect& mRect);
+    SDL_Rect convMeshRect(const MeshRect& mRect);
 
     // PHYSICS ==================================
     

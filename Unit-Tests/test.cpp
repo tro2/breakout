@@ -4,7 +4,7 @@
 
 // up down
 TEST(CollisionTest, A_above_B) {
-	MeshRect a = MeshRect(Vec2d(0.f, 20.f), Vec2d(10.f, 10.f));
+	MeshRect a = MeshRect(Vec2d(0.f, 10.f), Vec2d(10.f, 10.f));
 	MeshRect b = MeshRect(Vec2d(0.f, 0.f), Vec2d(10.f, 10.f));
 
 	bool result = Utils::checkCollision(a, b);
@@ -42,7 +42,7 @@ TEST(CollisionTest, B_int_A_above) {
 
 // left right
 TEST(CollisionTest, A_left_B) {
-	MeshRect a = MeshRect(Vec2d(-15.f, 10.f), Vec2d(10.f, 10.f));
+	MeshRect a = MeshRect(Vec2d(5.f, 10.f), Vec2d(10.f, 10.f));
 	MeshRect b = MeshRect(Vec2d(15.f, 10.f), Vec2d(10.f, 10.f));
 
 	bool result = Utils::checkCollision(a, b);

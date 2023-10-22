@@ -54,17 +54,17 @@ Vec2i Utils::convVec(const Vec2d& vecD)
     return vecI;
 }
 
-//SDL_Rect Utils::convMeshRect(const MeshRect& mRect)
-//{
-//    SDL_Rect rect = {
-//        Utils::roundDtoI(mRect.position.x),
-//        Utils::roundDtoI(mRect.position.y),
-//        Utils::roundDtoI(mRect.size.x),
-//        Utils::roundDtoI(mRect.size.y)
-//    };
-//
-//    return rect;
-//}
+SDL_Rect Utils::convMeshRect(const MeshRect& mRect)
+{
+    SDL_Rect rect = {
+        Utils::roundDtoI(mRect.position.x),
+        Utils::roundDtoI(mRect.position.y),
+        Utils::roundDtoI(mRect.size.x),
+        Utils::roundDtoI(mRect.size.y)
+    };
+
+    return rect;
+}
 
 Vec2d Utils::calcElasticBounce(MoveableMRect& mObject, const MeshRect& obstacle)
 {
@@ -170,15 +170,15 @@ bool Utils::checkCollision(const MeshRect& a, const MeshRect& b)
     bottomB = b.position.y - b.size.y / 2.f;
 
     // if x bounds don't overlap
-    if (rightA < leftB 
-        || leftA > rightB)
+    if (rightA <= leftB 
+        || leftA >= rightB)
     {
         return false;
     }
 
     // if y bounds don't overlap
-    if (bottomA > topB
-        || topA < bottomB)
+    if (bottomA >= topB
+        || topA <= bottomB)
     {
         return false;
     }
