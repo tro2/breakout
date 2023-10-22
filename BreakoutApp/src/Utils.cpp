@@ -38,7 +38,7 @@ int Utils::preciseAdd(int a, double b)
 
 int Utils::roundDtoI(double a)
 {
-    return static_cast<int>(a - 0.5f);
+    return static_cast<int>(a + 0.5f);
 }
 
 Vec2i Utils::convVec(const Vec2d& vecD)

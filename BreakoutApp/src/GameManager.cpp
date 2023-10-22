@@ -5,10 +5,18 @@
 bool GameManager::loadObjects(GameObjects& gObjects)
 {
 	// game Arena
-	gObjects.bottomWall = MeshRect(Vec2d(0.0f, -ARENA_SIZE.y / 2 ), Vec2d(ARENA_SIZE.x, 5.0f));
-	gObjects.topWall = MeshRect(Vec2d(0.0f, ARENA_SIZE.y / 2 ), Vec2d(ARENA_SIZE.x, 5.0f));
-	gObjects.leftWall = MeshRect(Vec2d(-ARENA_SIZE.x / 2.0f, 0.0f), Vec2d(5.0f, ARENA_SIZE.y));
-	gObjects.rightWall = MeshRect(Vec2d(ARENA_SIZE.x / 2.0f, 0.0f), Vec2d(5.0f, ARENA_SIZE.y));
+	gObjects.bottomWall 
+        = MeshRect(Vec2d(0.0f, -ARENA_SIZE.y / 2.0f + WALL_WIDTH / 2.0f)
+        , Vec2d(ARENA_SIZE.x, WALL_WIDTH));
+	gObjects.topWall 
+        = MeshRect(Vec2d(0.0f, ARENA_SIZE.y / 2.0f - WALL_WIDTH / 2.0f)
+        , Vec2d(ARENA_SIZE.x, WALL_WIDTH));
+	gObjects.leftWall 
+        = MeshRect(Vec2d(-ARENA_SIZE.x / 2.0f + WALL_WIDTH / 2.0f, 0.0f)
+        , Vec2d(WALL_WIDTH, ARENA_SIZE.y));
+	gObjects.rightWall 
+        = MeshRect(Vec2d(ARENA_SIZE.x / 2.0f - WALL_WIDTH / 2.0f, 0.0f)
+        , Vec2d(WALL_WIDTH, ARENA_SIZE.y));
 
 	// ball
 	gObjects.ball.ballRect = MeshRect(Vec2d(50.0f, 50.0f), Vec2d(10.0f, 10.0f));

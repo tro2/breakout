@@ -10,10 +10,13 @@
 // INITIAL TYPES ================================
 
 const Vec2d ARENA_SIZE = { 300.0f, 200.0f };
+const double WALL_WIDTH = 5.0f;
 
-const float BALL_VELOCITY = 30.0f;
-const float PADDLE_VELOCITY_TOTAL = 40.0f;
+
+const double BALL_VELOCITY = 30.0f;
+
 const Vec2d PADDLE_SIZE = Vec2d(50.0f, 5.0f);
+const double PADDLE_VELOCITY_TOTAL = 40.0f;
 
 // STRUCTS ======================================
 

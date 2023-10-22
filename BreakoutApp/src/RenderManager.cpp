@@ -246,22 +246,53 @@ void RenderManager::renderTexture(const TextTexture& lTexture, Vec2d position, A
     SDL_RenderCopy(app.gameRenderer, lTexture.getMTexture(), clip, &renderQuad);
 }
 
+// WARNING ======================================
+// this render function is not as accurate in transforming world units to pixels
+// ==============================================
+//void RenderManager::renderRect(const MeshRect& mRect, const SDL_Color& color, AppContext& app)
+//{
+//    // position is given relative to world origin in center and position marking center of mesh
+//    Vec2i posI = Utils::convVec(Utils::scaleVecD(mRect.position, app.PIXELS_PER_UNIT));
+//    Vec2i sizeI = Utils::convVec(Utils::scaleVecD(mRect.size, app.PIXELS_PER_UNIT));
+//
+//    // conv pos to rect origin at top left
+//    posI.x -= sizeI.x / 2;
+//    posI.y += sizeI.y / 2;
+//
+//    // conv pos to relative to top left
+//    posI.x = app.WINDOW_SIZE.x / 2 + posI.x;
+//    posI.y = app.WINDOW_SIZE.y / 2 - posI.y;
+//    
+//    SDL_Rect renderQuad = { posI.x, posI.y, sizeI.x, sizeI.y };
+//    
+//    SDL_SetRenderDrawColor(app.gameRenderer, color.r, color.g, color.b, color.a);
+//
+//    SDL_RenderFillRect(app.gameRenderer, &renderQuad);
+//}
+
+// WARNING ======================================
+// this render function is more accurate at transforming pixels, but not perfect
+// use only with numbers that scale nicely (use supported resolutions)
+// ==============================================
 void RenderManager::renderRect(const MeshRect& mRect, const SDL_Color& color, AppContext& app)
 {
     // position is given relative to world origin in center and position marking center of mesh
-    Vec2i posI = Utils::convVec(Utils::scaleVecD(mRect.position, app.PIXELS_PER_UNIT));
-    Vec2i sizeI = Utils::convVec(Utils::scaleVecD(mRect.size, app.PIXELS_PER_UNIT));
+    Vec2d posD = Utils::scaleVecD(mRect.position, app.PIXELS_PER_UNIT);
+    Vec2d sizeD = Utils::scaleVecD(mRect.size, app.PIXELS_PER_UNIT);
 
     // conv pos to rect origin at top left
-    posI.x -= sizeI.x / 2;
-    posI.y += sizeI.y / 2;
+    posD.x -= sizeD.x / 2;
+    posD.y += sizeD.y / 2;
 
     // conv pos to relative to top left
-    posI.x = app.WINDOW_SIZE.x / 2 + posI.x;
-    posI.y = app.WINDOW_SIZE.y / 2 - posI.y;
-    
+    posD.x = app.WINDOW_SIZE.x / 2 + posD.x;
+    posD.y = app.WINDOW_SIZE.y / 2 - posD.y;
+
+    Vec2i posI = Utils::convVec(posD);
+    Vec2i sizeI = Utils::convVec(sizeD);
+
     SDL_Rect renderQuad = { posI.x, posI.y, sizeI.x, sizeI.y };
-    
+
     SDL_SetRenderDrawColor(app.gameRenderer, color.r, color.g, color.b, color.a);
 
     SDL_RenderFillRect(app.gameRenderer, &renderQuad);
