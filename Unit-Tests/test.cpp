@@ -22,7 +22,7 @@ TEST(CollisionTest, B_above_A) {
 }
 
 TEST(CollisionTest, A_Int_B_above) {
-	MeshRect a = MeshRect(Vec2d(0.f, 10.f), Vec2d(10.f, 10.f));
+	MeshRect a = MeshRect(Vec2d(0.f, 9.f), Vec2d(10.f, 10.f));
 	MeshRect b = MeshRect(Vec2d(0.f, 0.f), Vec2d(10.f, 10.f));
 
 	bool result = Utils::checkCollision(a, b);
