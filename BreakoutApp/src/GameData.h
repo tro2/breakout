@@ -5,7 +5,9 @@
 
 #include <array>
 
+#include "MeshRect.h"
 #include "TextTexture.h"
+#include "Vec2.h"
 
 // INITIAL TYPES ================================
 
@@ -19,6 +21,22 @@ const Vec2d PADDLE_SIZE = Vec2d(50.f, 5.f);
 const double PADDLE_VELOCITY = 100.f;
 
 const int INITIAL_TARGETS = 10;
+
+// ENUMS ========================================
+
+enum GameState
+{
+    READY,
+    IN_GAME,
+    VICTORY,
+};
+
+enum PaddleMove
+{
+    LEFT,
+    STILL,
+    RIGHT
+};
 
 // STRUCTS ======================================
 

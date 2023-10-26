@@ -1,5 +1,6 @@
 #pragma once
 
+// 2D vector of doubles
 struct Vec2d {
     double x;
     double y;
@@ -23,44 +24,15 @@ struct Vec2d {
 
     Vec2d operator *(double s) const
     {
-        return Vec2d(x*s, y*s);
+        return Vec2d(x * s, y * s);
     }
 };
 
+// 2D vector of ints
 struct Vec2i {
     int x;
     int y;
 
     Vec2i() : x(0), y(0) {}
     Vec2i(int x, int y) : x(x), y(y) {}
-};
-
-struct MeshRect {
-    Vec2d position;
-    Vec2d size;
-
-    MeshRect() : position(), size() {}
-    MeshRect(Vec2d pos, Vec2d size) : position(pos), size(size) {}
-};
-
-struct MoveableMRect {
-    MeshRect mRect;
-    Vec2d velocity;
-
-    MoveableMRect() : mRect(), velocity() {}
-    MoveableMRect(MeshRect mRect, Vec2d vel) : mRect(mRect), velocity(vel) {}
-};
-
-enum GameState
-{
-    READY,
-    IN_GAME,
-    VICTORY,
-};
-
-enum PaddleMove
-{
-    LEFT,
-    STILL,
-    RIGHT
 };
