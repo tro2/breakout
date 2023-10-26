@@ -5,7 +5,7 @@
 
 #include <SDL.h>
 
-#include "DataTypes.h"
+#include "Vec2.h"
 
 // TODO make this class stupid and think about access
 

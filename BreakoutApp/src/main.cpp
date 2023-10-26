@@ -8,7 +8,6 @@
 #include <SDL_ttf.h>
 
 #include "GameData.h"
-#include "DataTypes.h"
 #include "RenderManager.h"
 #include "GameManager.h"
 #include "Logger.h"

@@ -97,7 +97,7 @@ Vec2d Utils::calcElasticBounce(MoveableMRect& mObject, const MeshRect& obstacle)
     mObject.velocity.x *= -1;
     mObject.velocity.y *= -1;
     
-    return { -1 * directionX * moveBackX, -1 * directionY * moveBackY };
+    return { moveBackX * -directionX , moveBackY * -directionY };
 }
 
 

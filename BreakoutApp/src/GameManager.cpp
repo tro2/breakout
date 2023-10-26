@@ -47,7 +47,7 @@ void GameManager::update(GameObjects& gObjects, GameState& gameState, PaddleMove
 {
     // PADDLE ===================================
     // move paddle and check collisions with walls
-    gObjects.paddle.velocity.x = (paddleMove - 1) * PADDLE_VELOCITY;
+    gObjects.paddle.velocity.x = (static_cast<int>(paddleMove) - 1) * PADDLE_VELOCITY;
     std::vector<MeshRect*> vec = { &gObjects.leftWall, &gObjects.rightWall };
     Utils::moveStaticBounce(gObjects.paddle, vec, timeStep);
     // reset paddleMove because otherwise paddle moves continously in direction last given

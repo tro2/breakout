@@ -1,6 +1,5 @@
 #pragma once
 
-#include "DataTypes.h"
 #include "GameData.h"
 
 class GameManager {

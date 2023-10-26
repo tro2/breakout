@@ -4,8 +4,8 @@
 
 #include <SDL.h>
 
-#include "DataTypes.h"
 #include "GameData.h"
+#include "Vec2.h"
 
 namespace Utils
 {

@@ -4,6 +4,7 @@
 
 #include <SDL_image.h>
 
+#include "Vec2.h"
 #include "Utils.h"
 #include "Logger.h"
 

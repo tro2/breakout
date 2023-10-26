@@ -5,6 +5,7 @@
 
 #include "GameData.h"
 #include "TextTexture.h"
+#include "Vec2.h"
 
 // Renderer class abstracts SDL_Renderer
 class RenderManager
