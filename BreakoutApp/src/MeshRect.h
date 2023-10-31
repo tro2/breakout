@@ -14,7 +14,8 @@ struct MeshRect {
 struct MoveableMRect {
     MeshRect mRect;
     Vec2d velocity;
+    double maxVelocity;
 
-    MoveableMRect() : mRect(), velocity() {}
-    MoveableMRect(MeshRect mRect, Vec2d vel) : mRect(mRect), velocity(vel) {}
+    MoveableMRect() : mRect(), velocity(), maxVelocity() {}
+    MoveableMRect(MeshRect mRect, Vec2d vel, double maxVel) : mRect(mRect), velocity(vel), maxVelocity(maxVel) {}
 };
