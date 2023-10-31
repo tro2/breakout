@@ -211,6 +211,7 @@ void RenderManager::renderGame(const Textures& gTextures, GameState gState, Game
     for (auto it = gObjects.obstacles.begin(); it != gObjects.obstacles.end(); ++it)
     {
         renderRect(*it, blue, app);
+        renderRectOutline(*it, black, app);
     }
 
     // render text
@@ -310,6 +311,30 @@ void RenderManager::renderRect(const MeshRect& mRect, const SDL_Color& color, Ap
     SDL_SetRenderDrawColor(app.gameRenderer, color.r, color.g, color.b, color.a);
 
     SDL_RenderFillRect(app.gameRenderer, &renderQuad);
+}
+
+void RenderManager::renderRectOutline(const MeshRect& mRect, const SDL_Color& color, AppContext& app)
+{
+    // position is given relative to world origin in center and position marking center of mesh
+    Vec2d posD = mRect.position * app.PIXELS_PER_UNIT;
+    Vec2d sizeD = mRect.size * app.PIXELS_PER_UNIT;
+
+    // conv pos to rect origin at top left
+    posD.x -= sizeD.x / 2;
+    posD.y += sizeD.y / 2;
+
+    // conv pos to relative to top left
+    posD.x = app.WINDOW_SIZE.x / 2 + posD.x;
+    posD.y = app.WINDOW_SIZE.y / 2 - posD.y;
+
+    Vec2i posI = Utils::convVec(posD);
+    Vec2i sizeI = Utils::convVec(sizeD);
+
+    SDL_Rect renderQuad = { posI.x, posI.y, sizeI.x, sizeI.y };
+
+    SDL_SetRenderDrawColor(app.gameRenderer, color.r, color.g, color.b, color.a);
+
+    SDL_RenderDrawRect(app.gameRenderer, &renderQuad);
 }
 
 void RenderManager::updateWindowSize(Vec2i newSize, AppContext& app)

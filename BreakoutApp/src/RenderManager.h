@@ -46,8 +46,14 @@ public:
     void renderTexture(const TextTexture& text, Vec2d position, AppContext& app
         , SDL_Rect* clip = nullptr) const;
 
+
+    // TODO look at render floats
     // render given rectangle while adapting it to window size
     void renderRect(const MeshRect& mRect, const SDL_Color& color, AppContext& app);
+
+    void renderRectOutline(const MeshRect& mRect, const SDL_Color& color, AppContext& app);
+
+    // TODO implement bulk draws, created a scaled and positioned array to pass
 
     // updates window size and scaling factor
     void updateWindowSize(Vec2i newSize, AppContext& app);
