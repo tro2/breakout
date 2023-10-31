@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cmath>
+
 // 2D vector of doubles
 struct Vec2d {
     double x;
@@ -22,9 +24,26 @@ struct Vec2d {
         return (*this);
     }
 
+    Vec2d& operator *=(double s)
+    {
+        x *= s;
+        y *= s;
+        return (*this);
+    }
+
     Vec2d operator *(double s) const
     {
         return Vec2d(x * s, y * s);
+    }
+
+    Vec2d operator *(const Vec2d& v) const
+    {
+        return Vec2d(x * v.x, y * v.y);
+    }
+
+    double magnitude() const
+    {
+        return static_cast<double>(sqrt(x * x + y * y));
     }
 };
 
