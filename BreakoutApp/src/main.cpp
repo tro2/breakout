@@ -157,7 +157,11 @@ int main(int, char**)
         renderManager.renderGame(gameTextures, currentState, gameObjects, app);
 
         // update timestep for next loop
-        timeStep = deltaTimer.getTicks() / 1000.0;
+        timeStep = static_cast<double>(deltaTimer.getTicks()) / 1000.f;
+
+        // set max timestep to 60 fps
+        if (timeStep > 1.f / 60.f)
+            timeStep = 1.f / 60.f;
     }
 
     // CLOSE ====================================
