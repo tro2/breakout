@@ -2,7 +2,9 @@
 
 #include <vector>
 
+#include "Physics.h"
 #include "Utils.h"
+#include "Vec2.h"
 
 bool GameManager::loadObjects(GameObjects& gObjects)
 {
@@ -25,20 +27,29 @@ bool GameManager::loadObjects(GameObjects& gObjects)
           Vec2d(0.f, -ARENA_SIZE.y / 2.f + WALL_WIDTH + PADDLE_SIZE.y + BALL_SIZE.y / 2.f)
         , BALL_SIZE);
     gObjects.ball.velocity = Vec2d(0.f, 0.f);
+    gObjects.ball.maxVelocity = BALL_VELOCITY;
 
     // paddle
     gObjects.paddle.mRect = { {0.f, -ARENA_SIZE.y / 2.f + WALL_WIDTH + PADDLE_SIZE.y / 2.f}, PADDLE_SIZE};
     gObjects.paddle.velocity = { 0.f, 0.f };
+    gObjects.paddle.maxVelocity = PADDLE_VELOCITY;
 
     // obstacles
-    for (auto it = gObjects.obstacles.begin(); it != gObjects.obstacles.end(); ++it)
+    std::vector<Vec2d> posArr = Utils::generatePositions(INITIAL_TARGETS, OBSTACLE_SIZE, OBSTACLE_SECTION);
+    for (auto it = posArr.begin(); it != posArr.end(); ++it)
     {
-        Vec2d position;
-
-        // TODO spread out the obstacles
-        
-        *it = MeshRect(position, Vec2d(10.f,10.f));
+        gObjects.obstacles.push_front(MeshRect(*it, OBSTACLE_SIZE));
     }
+
+    // wall collision holder
+    gObjects.wallObstacles.push_front(&gObjects.leftWall);
+    gObjects.wallObstacles.push_front(&gObjects.rightWall);
+    gObjects.wallObstacles.push_front(&gObjects.topWall);
+    gObjects.wallObstacles.push_front(&gObjects.bottomWall);
+
+    // goal collision
+    gObjects.goal = gObjects.bottomWall;
+    gObjects.goal.position.y += WALL_WIDTH - 1;
 
     return true;
 }
@@ -48,10 +59,9 @@ void GameManager::update(GameObjects& gObjects, GameState& gameState, PaddleMove
     // PADDLE ===================================
     // move paddle and check collisions with walls
     gObjects.paddle.velocity.x = (static_cast<int>(paddleMove) - 1) * PADDLE_VELOCITY;
-    std::vector<MeshRect*> vec = { &gObjects.leftWall, &gObjects.rightWall };
-    Utils::moveStaticBounce(gObjects.paddle, vec, timeStep);
+    Physics::moveStaticBounce(gObjects.paddle, gObjects.wallObstacles, timeStep);
+
     // reset paddleMove because otherwise paddle moves continously in direction last given
-    // 
     paddleMove = PaddleMove::STILL;
 
     // BALL =====================================
@@ -63,15 +73,9 @@ void GameManager::update(GameObjects& gObjects, GameState& gameState, PaddleMove
     }
     else if (gameState == GameState::IN_GAME)
     {
-        vec.push_back(&gObjects.topWall);
-        vec.push_back(&gObjects.bottomWall);
-
-        for (auto it = gObjects.obstacles.begin(); it != gObjects.obstacles.end(); ++it)
-        {
-            vec.push_back(&*it);
-        }
         // move ball and check collisions with GameObjects
-        Utils::moveElasticBounce(gObjects.ball, gObjects.ball.velocity * timeStep, vec);
+        Physics::moveElasticBounce(gObjects.ball, gObjects.obstacles
+            , gObjects.wallObstacles, gObjects.paddle, timeStep);
 
         // TODO separate ball collision with paddle
     }

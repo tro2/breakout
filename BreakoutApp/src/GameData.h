@@ -3,7 +3,8 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 
-#include <array>
+#include <forward_list>
+#include <list>
 
 #include "MeshRect.h"
 #include "TextTexture.h"
@@ -21,6 +22,9 @@ const Vec2d PADDLE_SIZE = Vec2d(50.f, 5.f);
 const double PADDLE_VELOCITY = 100.f;
 
 const int INITIAL_TARGETS = 10;
+const Vec2d OBSTACLE_SIZE = Vec2d(30.f, 20.f);
+const Vec2d OBSTACLE_SECTION = Vec2d(250.f, 100.f);
+
 
 // ENUMS ========================================
 
@@ -72,8 +76,11 @@ struct GameObjects {
     MoveableMRect ball;
     
     // obstacles
-    std::array<MeshRect, INITIAL_TARGETS> obstacles{};
+    std::list<MeshRect> obstacles;
 
+    // for collision purposes
+    std::forward_list<MeshRect*> wallObstacles;
+    MeshRect goal;
 };
 
 struct Fonts {
