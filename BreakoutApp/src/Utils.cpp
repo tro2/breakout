@@ -6,6 +6,8 @@
 
 #include "Logger.h"
 
+// TODO remove excess functions
+// TODO regroup logic for different purposes
 double Utils::randomDouble(double lowerBound, double upperBound)
 {
     // random device for randomization functions
@@ -67,165 +69,27 @@ SDL_Rect Utils::convMeshRect(const MeshRect& mRect)
     return rect;
 }
 
-Vec2d Utils::calcElasticBounce(MoveableMRect& mObject, const MeshRect& obstacle)
+std::vector<Vec2d> Utils::generatePositions(int numPositions, const Vec2d& obstacleSize, const Vec2d& boxSize)
 {
-    // determine direction of movement
-    int directionX = (mObject.velocity.x > 0) ? 1 : -1;
-    int directionY = (mObject.velocity.y > 0) ? 1 : -1;
+    std::vector<Vec2d> positionHolder(numPositions);
 
-    // figure out how much to move back in x direction
-    double moveBackX = 0.f;
-    if (mObject.velocity.x != 0)
+    Vec2d startPosition(obstacleSize.x / 2.f, boxSize.y - obstacleSize.y / 2.f);
+    int numColumns = static_cast<int>(boxSize.x/obstacleSize.x);
+    int numRows = (numPositions + numColumns - 1) / numColumns; // rounds up if both numbers are positive
+
+
+    // TODO center box in x direction if size does not divide cleanly into boxSize
+    int index = 0;
+    for (int i = 0; i < numRows; ++i)
     {
-        // moveback = obstacle posx
-        
-        double distanceBetween = obstacle.size.x / 2.f + mObject.mRect.size.x / 2.f;
-        moveBackX = -directionX * distanceBetween - obstacle.position.x - mObject.mRect.position.x;
-        mObject.mRect.position.x = obstacle.position.x + distanceBetween * -directionX;
-    }
-
-    // figure out how much to move back in y direction
-    double moveBackY = 0.f;
-    if (mObject.velocity.y != 0)
-    {
-        double distanceBetween = obstacle.size.y / 2.f + mObject.mRect.size.y / 2.f;
-        moveBackY = -directionY * (obstacle.position.y - mObject.mRect.position.y) + distanceBetween;
-        mObject.mRect.position.y = obstacle.position.y + distanceBetween * -directionY;
-    }
-
-    // update velocity
-    mObject.velocity.x *= -1;
-    mObject.velocity.y *= -1;
-    
-    return { moveBackX * -directionX , moveBackY * -directionY };
-}
-
-
-Vec2d Utils::calcStaticBounce(MoveableMRect& mObject, const MeshRect& obstacle)
-{
-    /*
-    // update mObject position
-     mObject to the right of the mObject
-    if (mObject.velocity.x > 0)
-    {
-        mObject.mRect.position.x = obstacle.position.x - obstacle.size.x / 2.f - mObject.mRect.size.x / 2.f;
-    }
-    // mObject is to the left
-    else if (mObject.velocity.x < 0)
-    {
-        // mObject.x - objectsize.x / 2 = obstacle.x + obstaclesize.x / 2
-        mObject.mRect.position.x = obstacle.position.x + obstacle.size.x / 2.f + mObject.mRect.size.x / 2.f;
-    }
-
-    // mObject is below
-    if (mObject.velocity.y > 0)
-    {
-        mObject.mRect.position.y = obstacle.position.y - obstacle.size.y / 2.f - mObject.mRect.size.y / 2.f;
-    }
-    // mObject is above
-    else if (mObject.velocity.y < 0)
-    {
-        // mObject.x - objectsize.x / 2 = obstacle.x + obstaclesize.x / 2
-        mObject.mRect.position.y = obstacle.position.y + obstacle.size.y / 2.f + mObject.mRect.size.y / 2.f;
-    }
-    */
-
-    if (mObject.velocity.x != 0)
-    {
-        int directionX = (mObject.velocity.x > 0) ? -1 : 1;
-        mObject.mRect.position.x = obstacle.position.x + (obstacle.size.x / 2.f + mObject.mRect.size.x / 2.f) * directionX;
-    }
-
-    if (mObject.velocity.y != 0)
-    {
-        int directionY = (mObject.velocity.x > 0) ? 1 : -1;
-        mObject.mRect.position.y = obstacle.position.y + (obstacle.size.y / 2.f + mObject.mRect.size.y / 2.f) * directionY;
-    }
-    
-    // update velocity to 0
-    mObject.velocity = Vec2d();
-    
-    // return remaining movement
-    return { 0.f,0.f };
-}
-
-bool Utils::checkCollision(const MeshRect& a, const MeshRect& b)
-{
-    // the sides to check collisions
-    double leftA;
-    double rightA;
-    double topA;
-    double bottomA;
-
-    double leftB;
-    double rightB;
-    double topB;
-    double bottomB;
-
-    // Calculate the sides of rect A
-    leftA = a.position.x - a.size.x / 2.f;
-    rightA = a.position.x + a.size.x / 2.f;
-    topA = a.position.y + a.size.y / 2.f;
-    bottomA = a.position.y - a.size.y / 2.f;
-
-    // Calculate the sides of rect B
-    leftB = b.position.x - b.size.x / 2.f;
-    rightB = b.position.x + b.size.x / 2.f;
-    topB = b.position.y + b.size.y / 2.f;
-    bottomB = b.position.y - b.size.y / 2.f;
-
-    // if x bounds don't overlap
-    if (rightA <= leftB 
-        || leftA >= rightB)
-    {
-        return false;
-    }
-
-    // if y bounds don't overlap
-    if (bottomA >= topB
-        || topA <= bottomB)
-    {
-        return false;
-    }
-
-    // do overlap in both dimensions
-    return true;
-}
-
-void Utils::moveElasticBounce(MoveableMRect& object, Vec2d movement, std::vector<MeshRect*> objectArr)
-{
-    if (movement.x == 0.f && movement.y == 0.f)
-    {
-        return;
-    }
-    
-    object.mRect.position += movement;
-
-    for (auto it = objectArr.begin(); it != objectArr.end(); ++it)
-    {
-        if (checkCollision(object.mRect, **it))
+        for (int j = 0; j < numColumns && index < numPositions; ++j)
         {
-            movement = Utils::calcElasticBounce(object, **it);
-            
-            std::stringstream msg;
-            msg << "Movement after collision: " << movement.y;
+            positionHolder[index] = Vec2d(startPosition.x + obstacleSize.x * j - boxSize.x / 2.f
+                , startPosition.y - obstacleSize.y * i - boxSize.y / 2.f);
 
-            Logger::log(LogLevel::DEBUG, msg.str());
-
-            moveElasticBounce(object, movement, objectArr);
+            index++;
         }
     }
-}
 
-void Utils::moveStaticBounce(MoveableMRect& object, std::vector<MeshRect*> objectArr, double timeStep)
-{
-    object.mRect.position += object.velocity * timeStep;
-
-    for (auto it = objectArr.begin(); it != objectArr.end(); ++it)
-    {
-        if (checkCollision(object.mRect, **it))
-        {
-            Utils::calcStaticBounce(object, **it);
-        }
-    }
+    return positionHolder;
 }
