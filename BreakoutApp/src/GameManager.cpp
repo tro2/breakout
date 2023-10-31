@@ -76,8 +76,6 @@ void GameManager::update(GameObjects& gObjects, GameState& gameState, PaddleMove
         // move ball and check collisions with GameObjects
         Physics::moveElasticBounce(gObjects.ball, gObjects.obstacles
             , gObjects.wallObstacles, gObjects.paddle, timeStep);
-
-        // TODO separate ball collision with paddle
     }
     
 }

@@ -15,8 +15,6 @@
 
 // TODO make the game pausable
 // TODO pause every time the screen size is changed
-// TODO work out a way to debug and not get extremely large timesteps
-// maybe force 60 fps and step through frame by frame in debugging
 
 // FUNCTIONS ====================================
 
