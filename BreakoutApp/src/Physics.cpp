@@ -53,7 +53,7 @@ void Physics::moveElasticBounce(MoveableMRect& mObject, std::list<MeshRect>& obs
     Vec2d movement = mObject.velocity * timeStep;
     
     while (movement.x != 0.f || movement.y != 0.f)
-    {
+    {   
         movement = resolveElasticCollisions(mObject, movement, obstacles, walls, paddle, timeStep);
     }
 }
@@ -138,6 +138,7 @@ Vec2d Physics::resolveCollision(MoveableMRect& mObject, const MeshRect& obstacle
 
     Vec2d moveIncrement = Vec2d(xInc, yInc);
 
+    // update mObject velocity
     velocityFunc(mObject, obstacle);
 
     do
@@ -148,52 +149,77 @@ Vec2d Physics::resolveCollision(MoveableMRect& mObject, const MeshRect& obstacle
         // record how much you moved back
         distanceMoved += moveIncrement;
     } while (checkCollision(mObject.mRect, obstacle));
+    
+    // reorient movement vector in the direction of the object new velocity
+    // unit vector pointed in direction of  object's new velocity
+    Vec2d direction = mObject.velocity * (1 / mObject.maxVelocity);
 
-    // distanceMoved points in wrong direction
-    // need to translate distanceMoved to correct direction to return remaining movement
-
-    double magnitude = distanceMoved.magnitude();
-
-    distanceMoved *= magnitude * timeStep;
+    distanceMoved = direction * distanceMoved.magnitude();
 
     return distanceMoved;
 }
 
 void Physics::resolveElasticCollisionVelocity(MoveableMRect& mObject, const MeshRect& obstacle)
 {
-    // update object velocity
-        // the sides to check collisions
-    double leftA;
-    double rightA;
-    double topA;
-    double bottomA;
-
-    double leftB;
-    double rightB;
-    double topB;
-    double bottomB;
-
     // Calculate the sides of rect A
-    leftA = mObject.mRect.position.x - mObject.mRect.size.x / 2.f;
-    rightA = mObject.mRect.position.x + mObject.mRect.size.x / 2.f;
-    topA = mObject.mRect.position.y + mObject.mRect.size.y / 2.f;
-    bottomA = mObject.mRect.position.y - mObject.mRect.size.y / 2.f;
+    double leftA = mObject.mRect.position.x - mObject.mRect.size.x / 2.f;
+    double rightA = mObject.mRect.position.x + mObject.mRect.size.x / 2.f;
+    double topA = mObject.mRect.position.y + mObject.mRect.size.y / 2.f;
+    double bottomA = mObject.mRect.position.y - mObject.mRect.size.y / 2.f;
 
     // Calculate the sides of rect B
-    leftB = obstacle.position.x - obstacle.size.x / 2.f;
-    rightB = obstacle.position.x + obstacle.size.x / 2.f;
-    topB = obstacle.position.y + obstacle.size.y / 2.f;
-    bottomB = obstacle.position.y - obstacle.size.y / 2.f;
+    double leftB = obstacle.position.x - obstacle.size.x / 2.f;
+    double rightB = obstacle.position.x + obstacle.size.x / 2.f;
+    double topB = obstacle.position.y + obstacle.size.y / 2.f;
+    double bottomB = obstacle.position.y - obstacle.size.y / 2.f;
 
-    if (rightA >= leftB && leftA <= rightB)
+    // TODO fix bug with collisions on corners of rectangles
+
+    // determine which side was hit using velocity and position of rectangles
+    if (mObject.velocity.x > 0)
     {
-        // Collision occurred on the top or bottom side of the stationary rectangle
-        mObject.velocity.y *= -1; // Reverse the vertical velocity
+        // right side
+        if (rightA >= leftB && leftA <= leftB)
+        {
+            mObject.velocity.x *= -1;
+
+            //Logger::log(DEBUG, "collided from left");
+        }
     }
-    if (bottomA >= topB && topA <= bottomB)
+    else if (mObject.velocity.x < 0)
     {
-        // Collision occurred on the left or right side of the stationary rectangle
-        mObject.velocity.y *= -1; // Reverse the horizontal velocity
+        // left side
+        if (leftA <= rightB && rightA >= rightB)
+        {
+            mObject.velocity.x *= -1;
+
+            //Logger::log(DEBUG, "collided from right");
+        }
+    }
+    
+    if (mObject.velocity.y > 0)
+    {
+        // top side
+        if (topA >= bottomB && bottomA <= bottomB)
+        {
+            mObject.velocity.y *= -1;
+
+            //Logger::log(DEBUG, "collided from the bottom");
+        }
+    }
+    else if (mObject.velocity.y < 0)
+    {
+        // bottom side
+        if (bottomA <= topB && topA >= topB)
+        {
+            mObject.velocity.y *= -1;
+
+            //Logger::log(DEBUG, "collided from the top");
+        }
+    }
+    else
+    {
+        Logger::log(DEBUG, "could not determine collision");
     }
 }
 
@@ -203,9 +229,8 @@ void Physics::resolvePaddleCollisionVelocity(MoveableMRect& ball, const MeshRect
     double launchAngle = (ball.mRect.position.x - paddle.position.x) * -45 / paddle.size.x * 2;
     launchAngle += 90;
 
-    std::stringstream sstr; sstr << "launch angle: " << launchAngle;
-
-    Logger::log(DEBUG, sstr.str());
+    // convert to radians
+    launchAngle *= 3.1415926f / 180;
 
     ball.velocity.x = ball.maxVelocity * cos(launchAngle);
     ball.velocity.y = ball.maxVelocity * sin(launchAngle);
