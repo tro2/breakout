@@ -86,11 +86,19 @@ Vec2d Physics::resolveElasticCollisions(MoveableMRect& mObject, Vec2d movement, 
     for (auto it = obstacles.begin(); it != obstacles.end(); ++it)
     {
         if (checkCollision(mObject.mRect, *it))
-        {
+        {   
             movement = Physics::resolveCollision(mObject, *it, timeStep, resolveElasticCollisionVelocity);
 
-            // erasing ball invalidates the old iterator, need to reset it
+            // erase obstacle
             it = obstacles.erase(it);
+
+            // increase velocity
+            Vec2d direction = mObject.velocity * (1 / mObject.maxVelocity);
+
+            mObject.maxVelocity += 5;
+            mObject.velocity = direction * mObject.maxVelocity;
+
+            // add one to score
 
             return movement;
         }
