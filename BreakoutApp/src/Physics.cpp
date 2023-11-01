@@ -122,29 +122,8 @@ Vec2d Physics::resolveCollision(MoveableMRect& mObject, const MeshRect& obstacle
 {
     Vec2d distanceMoved;
 
-    // scale factor for world units to move back is 0.1
-    float xInc = 0.f;
-    float yInc = 0.f;
-
-    if (mObject.velocity.x < 0)
-    {
-        xInc = 0.1f;
-    }
-    else if (mObject.velocity.x > 0)
-    {
-        xInc = -0.1f;
-    }
-
-    if (mObject.velocity.y < 0)
-    {
-        yInc = 0.1f;
-    }
-    else if (mObject.velocity.y > 0)
-    {
-        yInc = -0.1f;
-    }
-
-    Vec2d moveIncrement = Vec2d(xInc, yInc);
+    // opposite of mObject with length 0.1f
+    Vec2d moveIncrement = mObject.velocity * -(1/mObject.maxVelocity) * 0.1f;
 
     // update mObject velocity
     velocityFunc(mObject, obstacle);
