@@ -36,12 +36,14 @@ bool GameManager::loadObjects(GameObjects& gObjects)
 
     // obstacles
     std::vector<Vec2d> posArr = Utils::generatePositions(INITIAL_TARGETS, OBSTACLE_SIZE, OBSTACLE_SECTION);
+    gObjects.obstacles.clear();
     for (auto it = posArr.begin(); it != posArr.end(); ++it)
     {
         gObjects.obstacles.push_front(MeshRect(*it, OBSTACLE_SIZE));
     }
 
     // wall collision holder
+    gObjects.wallObstacles.clear();
     gObjects.wallObstacles.push_front(&gObjects.leftWall);
     gObjects.wallObstacles.push_front(&gObjects.rightWall);
     gObjects.wallObstacles.push_front(&gObjects.topWall);
