@@ -47,7 +47,6 @@ bool GameManager::loadObjects(GameObjects& gObjects)
     gObjects.wallObstacles.push_front(&gObjects.leftWall);
     gObjects.wallObstacles.push_front(&gObjects.rightWall);
     gObjects.wallObstacles.push_front(&gObjects.topWall);
-    gObjects.wallObstacles.push_front(&gObjects.bottomWall);
 
     // goal collision
     gObjects.goal = gObjects.bottomWall;
@@ -78,6 +77,14 @@ void GameManager::update(GameObjects& gObjects, GameState& gameState, PaddleMove
         // move ball and check collisions with GameObjects
         Physics::moveElasticBounce(gObjects.ball, gObjects.obstacles
             , gObjects.wallObstacles, gObjects.paddle, timeStep);
+
+        if (gObjects.obstacles.size() == 0
+            || Physics::checkCollision(gObjects.ball.mRect, gObjects.bottomWall))
+        {
+            // restart game
+            gameState = GameState::READY;
+            loadObjects(gObjects);
+        }
     }
     
 }

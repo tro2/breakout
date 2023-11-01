@@ -19,7 +19,7 @@ const Vec2d BALL_SIZE = Vec2d(5.f, 5.f);
 const double BALL_VELOCITY = 80.f;
 
 const Vec2d PADDLE_SIZE = Vec2d(50.f, 5.f);
-const double PADDLE_VELOCITY = 100.f;
+const double PADDLE_VELOCITY = 150.f;
 
 const int INITIAL_TARGETS = 30;
 const Vec2d OBSTACLE_SIZE = Vec2d(25.f, 15.f);
