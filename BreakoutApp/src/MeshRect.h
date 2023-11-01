@@ -1,6 +1,5 @@
 #pragma once
 
-// TODO check that this needs to be a Vec2d, can it be forward declaration
 #include "Vec2.h"
 
 struct MeshRect {
