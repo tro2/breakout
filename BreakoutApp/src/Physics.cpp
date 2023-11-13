@@ -30,15 +30,13 @@ bool Physics::checkCollision(const MeshRect& a, const MeshRect& b)
     bottomB = b.position.y - b.size.y / 2.f;
 
     // if x bounds don't overlap
-    if (rightA <= leftB
-        || leftA >= rightB)
+    if (rightA <= leftB || leftA >= rightB)
     {
         return false;
     }
 
     // if y bounds don't overlap
-    if (bottomA >= topB
-        || topA <= bottomB)
+    if (bottomA >= topB || topA <= bottomB)
     {
         return false;
     }
@@ -47,8 +45,7 @@ bool Physics::checkCollision(const MeshRect& a, const MeshRect& b)
     return true;
 }
 
-void Physics::moveElasticBounce(MoveableMRect& mObject, std::list<MeshRect>& obstacles
-    , const std::forward_list<MeshRect*>& walls, const MoveableMRect& paddle, double timeStep)
+void Physics::moveElasticBounce(MoveableMRect& mObject, std::list<MeshRect>& obstacles, const std::forward_list<MeshRect*>& walls, const MoveableMRect& paddle, double timeStep)
 {
     Vec2d movement = mObject.velocity * timeStep;
     
@@ -71,8 +68,7 @@ void Physics::moveStaticBounce(MoveableMRect& mObject, const std::forward_list<M
     }
 }
 
-Vec2d Physics::resolveElasticCollisions(MoveableMRect& mObject, Vec2d movement, std::list<MeshRect>& obstacles
-    , const std::forward_list<MeshRect*>& walls, const MoveableMRect& paddle, double timeStep)
+Vec2d Physics::resolveElasticCollisions(MoveableMRect& mObject, Vec2d movement, std::list<MeshRect>& obstacles, const std::forward_list<MeshRect*>& walls, const MoveableMRect& paddle, double timeStep)
 {
      mObject.mRect.position += movement;
 
@@ -117,13 +113,12 @@ Vec2d Physics::resolveElasticCollisions(MoveableMRect& mObject, Vec2d movement, 
     return Vec2d();
 }
 
-Vec2d Physics::resolveCollision(MoveableMRect& mObject, const MeshRect& obstacle, double timeStep
-    , void (*velocityFunc)(MoveableMRect&, const MeshRect&))
+Vec2d Physics::resolveCollision(MoveableMRect& mObject, const MeshRect& obstacle, double timeStep, void (*velocityFunc)(MoveableMRect&, const MeshRect&))
 {
     Vec2d distanceMoved;
 
     // opposite of mObject with length 0.1f
-    Vec2d moveIncrement = mObject.velocity * -(1/mObject.maxVelocity) * 0.1f;
+    Vec2d moveIncrement = mObject.velocity.unitVector() * -0.1f;
 
     // update mObject velocity
     velocityFunc(mObject, obstacle);
@@ -138,10 +133,7 @@ Vec2d Physics::resolveCollision(MoveableMRect& mObject, const MeshRect& obstacle
     } while (checkCollision(mObject.mRect, obstacle));
     
     // reorient movement vector in the direction of the object new velocity
-    // unit vector pointed in direction of  object's new velocity
-    Vec2d direction = mObject.velocity * (1 / mObject.maxVelocity);
-
-    distanceMoved = direction * distanceMoved.magnitude();
+    distanceMoved = mObject.velocity.unitVector() * distanceMoved.magnitude();
 
     return distanceMoved;
 }
@@ -182,6 +174,10 @@ void Physics::resolveElasticCollisionVelocity(MoveableMRect& mObject, const Mesh
 
             //Logger::log(DEBUG, "collided from right");
         }
+    }
+    else
+    {
+        Logger::log(DEBUG, "could not determine collision");
     }
     
     if (mObject.velocity.y > 0)
