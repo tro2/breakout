@@ -19,7 +19,6 @@ namespace Physics
     // moves paddle and checks against walls
     void moveStaticBounce(MoveableMRect& mObject, const std::forward_list<MeshRect*>& obstacles, double timeStep);
 
-    // TODO pass in one list, and decide collision result (delete object or no) separately
     // assuming non-zero movement, checks and resolves collisions of mObject
     // returns movement remaining after collision
     Vec2d resolveElasticCollisions(MoveableMRect& mObject, Vec2d movement, std::list<MeshRect>& obstacles

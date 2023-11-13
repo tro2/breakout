@@ -152,7 +152,8 @@ void Physics::resolveElasticCollisionVelocity(MoveableMRect& mObject, const Mesh
     double topB = obstacle.position.y + obstacle.size.y / 2.f;
     double bottomB = obstacle.position.y - obstacle.size.y / 2.f;
 
-    // TODO fix bug with collisions on corners of rectangles
+    // TODO determine order of collision to accurately update velocity
+    // only time both velocities should be updated would be on perfect corner collisions
 
     // determine which side was hit using velocity and position of rectangles
     if (mObject.velocity.x > 0)

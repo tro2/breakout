@@ -7,8 +7,6 @@
 
 #include "Vec2.h"
 
-// TODO make this class stupid and think about access
-
 // Wrapper class for textures (just text for now)
 class TextTexture
 {
