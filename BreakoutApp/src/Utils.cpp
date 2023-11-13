@@ -8,7 +8,6 @@
 
 // TODO regroup logic for different purposes
 // regroup conversion functions into casts on structs
-
 int Utils::roundDtoI(double a)
 {
     return static_cast<int>(a + 0.5f);
@@ -16,12 +15,7 @@ int Utils::roundDtoI(double a)
 
 Vec2i Utils::convVec(const Vec2d& vecD)
 {
-    Vec2i vecI = {
-        Utils::roundDtoI(vecD.x),
-        Utils::roundDtoI(vecD.y)
-    };
-
-    return vecI;
+    return Vec2i(Utils::roundDtoI(vecD.x), Utils::roundDtoI(vecD.y));
 }
 
 SDL_Rect Utils::convMeshRect(const MeshRect& mRect)
