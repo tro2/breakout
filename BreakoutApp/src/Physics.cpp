@@ -141,16 +141,16 @@ Vec2<float> Physics::resolveCollision(MoveableMRect& mObject, const MeshRect& ob
 void Physics::resolveElasticCollisionVelocity(MoveableMRect& mObject, const MeshRect& obstacle)
 {
     // Calculate the sides of rect A
-    double leftA = mObject.mRect.position.x - mObject.mRect.size.x / 2.f;
-    double rightA = mObject.mRect.position.x + mObject.mRect.size.x / 2.f;
-    double topA = mObject.mRect.position.y + mObject.mRect.size.y / 2.f;
-    double bottomA = mObject.mRect.position.y - mObject.mRect.size.y / 2.f;
+    float leftA = mObject.mRect.position.x - mObject.mRect.size.x / 2.f;
+    float rightA = mObject.mRect.position.x + mObject.mRect.size.x / 2.f;
+    float topA = mObject.mRect.position.y + mObject.mRect.size.y / 2.f;
+    float bottomA = mObject.mRect.position.y - mObject.mRect.size.y / 2.f;
 
     // Calculate the sides of rect B
-    double leftB = obstacle.position.x - obstacle.size.x / 2.f;
-    double rightB = obstacle.position.x + obstacle.size.x / 2.f;
-    double topB = obstacle.position.y + obstacle.size.y / 2.f;
-    double bottomB = obstacle.position.y - obstacle.size.y / 2.f;
+    float leftB = obstacle.position.x - obstacle.size.x / 2.f;
+    float rightB = obstacle.position.x + obstacle.size.x / 2.f;
+    float topB = obstacle.position.y + obstacle.size.y / 2.f;
+    float bottomB = obstacle.position.y - obstacle.size.y / 2.f;
 
     // TODO determine order of collision to accurately update velocity
     // only time both velocities should be updated would be on perfect corner collisions
@@ -216,8 +216,8 @@ void Physics::resolvePaddleCollisionVelocity(MoveableMRect& ball, const MeshRect
     // convert to radians
     launchAngle *= 3.1415926f / 180;
 
-    ball.velocity.x = ball.maxVelocity * cos(launchAngle);
-    ball.velocity.y = ball.maxVelocity * sin(launchAngle);
+    ball.velocity.x = ball.maxVelocity * static_cast<float>(cos(launchAngle));
+    ball.velocity.y = ball.maxVelocity * static_cast<float>(sin(launchAngle));
 }
 
 void Physics::resolveStaticCollisionVelocity(MoveableMRect& mObject, const MeshRect& obstacle)

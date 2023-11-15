@@ -30,6 +30,13 @@ struct Vec2 {
         return Vec2<float>(x * s, y * s);
     }
 
+    Vec2& operator *=(T s)
+    {
+        x *= s;
+        y *= s;
+        return (*this);
+    }
+
     // warning, division by 0 is undefined
     Vec2 operator /(T s) const
     {

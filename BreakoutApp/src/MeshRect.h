@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Vec2.h"
+#include <SDL.h>
 
 struct MeshRect {
     Vec2<float> position;
@@ -8,6 +9,18 @@ struct MeshRect {
 
     MeshRect() : position(), size() {}
     MeshRect(Vec2<float> pos, Vec2<float> size) : position(pos), size(size) {}
+
+    SDL_FRect castFRect() const
+    {
+        SDL_FRect fRect;
+
+        fRect.x = position.x;
+        fRect.y = position.y;
+        fRect.w = size.x;
+        fRect.h = size.y;
+        
+        return fRect;
+    }
 };
 
 struct MoveableMRect {
