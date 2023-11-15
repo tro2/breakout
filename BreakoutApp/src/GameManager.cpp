@@ -9,23 +9,13 @@
 bool GameManager::loadObjects(GameObjects& gObjects)
 {
     // game Arena
-    gObjects.bottomWall 
-        = MeshRect(Vec2<float>(0.f, -ARENA_SIZE.y / 2.f + WALL_WIDTH / 2.f)
-        , Vec2<float>(ARENA_SIZE.x, WALL_WIDTH));
-    gObjects.topWall 
-        = MeshRect(Vec2<float>(0.f, ARENA_SIZE.y / 2.f - WALL_WIDTH / 2.f)
-        , Vec2<float>(ARENA_SIZE.x, WALL_WIDTH));
-    gObjects.leftWall 
-        = MeshRect(Vec2<float>(-ARENA_SIZE.x / 2.f + WALL_WIDTH / 2.f, 0.f)
-        , Vec2<float>(WALL_WIDTH, ARENA_SIZE.y));
-    gObjects.rightWall 
-        = MeshRect(Vec2<float>(ARENA_SIZE.x / 2.f - WALL_WIDTH / 2.f, 0.f)
-        , Vec2<float>(WALL_WIDTH, ARENA_SIZE.y));
+    gObjects.bottomWall = MeshRect(Vec2<float>(0.f, -ARENA_SIZE.y / 2.f + WALL_WIDTH / 2.f), Vec2<float>(ARENA_SIZE.x, WALL_WIDTH));
+    gObjects.topWall = MeshRect(Vec2<float>(0.f, ARENA_SIZE.y / 2.f - WALL_WIDTH / 2.f), Vec2<float>(ARENA_SIZE.x, WALL_WIDTH));
+    gObjects.leftWall = MeshRect(Vec2<float>(-ARENA_SIZE.x / 2.f + WALL_WIDTH / 2.f, 0.f), Vec2<float>(WALL_WIDTH, ARENA_SIZE.y));
+    gObjects.rightWall = MeshRect(Vec2<float>(ARENA_SIZE.x / 2.f - WALL_WIDTH / 2.f, 0.f), Vec2<float>(WALL_WIDTH, ARENA_SIZE.y));
 
     // ball
-    gObjects.ball.mRect = MeshRect(
-          Vec2<float>(0.f, -ARENA_SIZE.y / 2.f + WALL_WIDTH + PADDLE_SIZE.y + BALL_SIZE.y / 2.f)
-        , BALL_SIZE);
+    gObjects.ball.mRect = MeshRect(Vec2<float>(0.f, -ARENA_SIZE.y / 2.f + WALL_WIDTH + PADDLE_SIZE.y + BALL_SIZE.y / 2.f), BALL_SIZE);
     gObjects.ball.velocity = Vec2<float>(0.f, 0.f);
     gObjects.ball.maxVelocity = BALL_VELOCITY;
 

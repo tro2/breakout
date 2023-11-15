@@ -15,6 +15,7 @@
 
 // TODO make the game pausable
 // TODO pause every time the screen size is changed
+// TODO implement level loading
 
 // FUNCTIONS ====================================
 

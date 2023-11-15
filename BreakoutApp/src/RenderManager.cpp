@@ -165,24 +165,21 @@ bool RenderManager::loadTextures(AppContext& appContext, Textures& textures, Fon
     bool success = true;
 
     // text textures
-    if (!loadFromRenderedText(textures.spacebarStartText, fonts.gFontRegular
-        , "Press Spacebar to start", black, appContext))
+    if (!loadFromRenderedText(textures.spacebarStartText, fonts.gFontRegular, "Press Spacebar to start", black, appContext))
     {
         std::string log = "Unable to load test text!";
         Logger::log(LogLevel::ERROR, log + TTF_GetError());
         success = false;
     }
 
-    if (!loadFromRenderedText(textures.victoryText, fonts.gFontRegular, "Victory!", black
-        , appContext))
+    if (!loadFromRenderedText(textures.victoryText, fonts.gFontRegular, "Victory!", black, appContext))
     {
         std::string log = "Unable to load viotory text!";
         Logger::log(LogLevel::ERROR, log + TTF_GetError());
         success = false;
     }
 
-    if (!loadFromRenderedText(textures.restartText, fonts.gFontRegular, "Press 'R' to restart..."
-        , black, appContext))
+    if (!loadFromRenderedText(textures.restartText, fonts.gFontRegular, "Press 'R' to restart...", black, appContext))
     {
         std::string log = "Unable to load restart text!";
         Logger::log(LogLevel::ERROR, log + TTF_GetError());
@@ -231,8 +228,7 @@ void RenderManager::renderGame(const Textures& gTextures, GameState gState, Game
     SDL_RenderPresent(app.gameRenderer);
 }
 
-void RenderManager::renderTexture(const TextTexture& lTexture, Vec2<float> position, AppContext& app
-    , SDL_Rect* clip) const
+void RenderManager::renderTexture(const TextTexture& lTexture, Vec2<float> position, AppContext& app, SDL_Rect* clip) const
 {
     // define rendering space and render
 

@@ -17,6 +17,7 @@ const float WALL_WIDTH = 5.f;
 
 const Vec2<float> BALL_SIZE = Vec2<float>(5.f, 5.f);
 const float BALL_VELOCITY = 80.f;
+const float SPEED_INCREMENT = 5.f;
 
 const Vec2<float> PADDLE_SIZE = Vec2<float>(50.f, 5.f);
 const float PADDLE_VELOCITY = 150.f;

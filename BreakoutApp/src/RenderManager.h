@@ -34,8 +34,7 @@ public:
     //bool loadFromFile(TextTexture& texture, std::string path, AppContext& app) const;
 
     // loads text string into a texture with the given color into given LTexture
-    bool loadFromRenderedText(TextTexture& texture, TTF_Font* font, std::string textureText
-        , SDL_Color textColor, AppContext& app) const;
+    bool loadFromRenderedText(TextTexture& texture, TTF_Font* font, std::string textureText, SDL_Color textColor, AppContext& app) const;
 
     // loads game textures into Textures&
     bool loadTextures(AppContext& app, Textures& textures, Fonts& fonts) const;
@@ -43,11 +42,9 @@ public:
     void renderGame(const Textures& gTextures, GameState gState, GameObjects gObjects, AppContext& app);
 
     // render given texture at the given point, adapted to window size, optional clip for sprite sheet
-    void renderTexture(const TextTexture& text, Vec2<float> position, AppContext& app
-        , SDL_Rect* clip = nullptr) const;
+    void renderTexture(const TextTexture& text, Vec2<float> position, AppContext& app, SDL_Rect* clip = nullptr) const;
 
 
-    // TODO look at render floats
     // render given rectangle while adapting it to window size
     void renderRect(const MeshRect& mRect, const SDL_Color& color, AppContext& app);
 

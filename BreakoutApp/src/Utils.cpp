@@ -7,7 +7,6 @@
 #include "Logger.h"
 
 // TODO regroup logic for different purposes
-// regroup conversion functions into casts on structs
 int Utils::roundDtoI(double a)
 {
     return static_cast<int>(a + 0.5f);

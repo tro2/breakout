@@ -3,6 +3,7 @@
 #include <sstream>
 
 #include "Logger.h"
+#include "GameData.h"
 
 bool Physics::checkCollision(const MeshRect& a, const MeshRect& b)
 {
@@ -91,7 +92,7 @@ Vec2<float> Physics::resolveElasticCollisions(MoveableMRect& mObject, Vec2<float
             // increase velocity
             Vec2<float> direction = mObject.velocity * (1 / mObject.maxVelocity);
 
-            mObject.maxVelocity += 5;
+            mObject.maxVelocity += SPEED_INCREMENT;
             mObject.velocity = direction * mObject.maxVelocity;
 
             // add one to score

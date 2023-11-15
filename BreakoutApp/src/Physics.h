@@ -21,15 +21,13 @@ namespace Physics
 
     // assuming non-zero movement, checks and resolves collisions of mObject
     // returns movement remaining after collision
-    Vec2<float> resolveElasticCollisions(MoveableMRect& mObject, Vec2<float> movement, std::list<MeshRect>& obstacles
-        , const std::forward_list<MeshRect*>& walls, const MoveableMRect& paddle, float timeStep);
+    Vec2<float> resolveElasticCollisions(MoveableMRect& mObject, Vec2<float> movement, std::list<MeshRect>& obstacles, const std::forward_list<MeshRect*>& walls, const MoveableMRect& paddle, float timeStep);
 
     // assuming mObject and obstacle are colliding
     // moves mObject out of obstacle
     // updates velocity based on func
     // returns the distance moved
-    Vec2<float> resolveCollision(MoveableMRect& mObject, const MeshRect& obstacle, float timeStep
-        , void (*velocityFunc)(MoveableMRect&, const MeshRect&));
+    Vec2<float> resolveCollision(MoveableMRect& mObject, const MeshRect& obstacle, float timeStep, void (*velocityFunc)(MoveableMRect&, const MeshRect&));
 
     // assuming mObject and obstacle are colliding
     // updates mObject velocity for elastic collision between stationary and moving object
