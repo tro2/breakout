@@ -24,7 +24,7 @@ public:
     // get dimensions
     int getWidth() const { return size.x; }
     int getHeight() const { return size.y; }
-    Vec2i getSize() const { return size; }
+    Vec2<int> getSize() const { return size; }
 
     // sets texture pointer
     void setMTexture(SDL_Texture* texture) { mTexture = texture; }
@@ -32,12 +32,12 @@ public:
     // sets dimensions
     void setWidth(int w) { size.x = w; }
     void setHeight(int h) { size.y = h; }
-    void setSize(Vec2i size) { size.x = size.x; size.y = size.y; }
+    void setSize(Vec2<int> size) { size.x = size.x; size.y = size.y; }
 
 private:
     // the underlying texture
     SDL_Texture* mTexture;
 
     // Image dimensions in pixels
-    Vec2i size;
+    Vec2<int> size;
 };

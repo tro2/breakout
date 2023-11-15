@@ -3,61 +3,53 @@
 #include <cmath>
 
 // 2D vector of doubles
-struct Vec2d {
-    double x;
-    double y;
+template <typename T>
+struct Vec2 {
+    T x;
+    T y;
 
-    Vec2d() : x(0.f), y(0.f) {}
-    Vec2d(double x, double y) : x(x), y(y) {}
+    Vec2() : x(0.f), y(0.f) {}
+    Vec2(T x, T y) : x(x), y(y) {}
 
-    Vec2d& operator +=(const Vec2d& v)
+    Vec2& operator +=(const Vec2& v)
     {
         x += v.x;
         y += v.y;
         return (*this);
     }
 
-    Vec2d& operator -=(const Vec2d& v)
+    Vec2& operator -=(const Vec2& v)
     {
         x -= v.x;
         y -= v.y;
         return (*this);
     }
 
-    Vec2d operator *(double s) const
+    Vec2 operator *(T s) const
     {
-        return Vec2d(x * s, y * s);
+        return Vec2<float>(x * s, y * s);
     }
 
     // warning, division by 0 is undefined
-    Vec2d operator /(double s) const
+    Vec2 operator /(T s) const
     {
-        return Vec2d(x / s, y / s);
+        return Vec2<float>(x / s, y / s);
     }
 
-    double magnitude() const
+    T magnitude() const
     {
-        return static_cast<double>(sqrt(x * x + y * y));
+        return static_cast<T>(sqrt(x * x + y * y));
     }
 
     // returns a unit vector in the direction of the referenced vector
     // returns 0 if magnitude of referenced vector is 0
-    Vec2d unitVector() const
+    Vec2 unitVector() const
     {
-        if (double magnitude = this->magnitude(); magnitude != 0.f)
+        if (T magnitude = this->magnitude(); magnitude != 0.f)
         {
             return *this / magnitude;
         }
 
-        return Vec2d();
+        return Vec2();
     }
-};
-
-// 2D vector of ints
-struct Vec2i {
-    int x;
-    int y;
-
-    Vec2i() : x(0), y(0) {}
-    Vec2i(int x, int y) : x(x), y(y) {}
 };

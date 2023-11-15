@@ -3,18 +3,18 @@
 #include "Vec2.h"
 
 struct MeshRect {
-    Vec2d position;
-    Vec2d size;
+    Vec2<float> position;
+    Vec2<float> size;
 
     MeshRect() : position(), size() {}
-    MeshRect(Vec2d pos, Vec2d size) : position(pos), size(size) {}
+    MeshRect(Vec2<float> pos, Vec2<float> size) : position(pos), size(size) {}
 };
 
 struct MoveableMRect {
     MeshRect mRect;
-    Vec2d velocity;
-    double maxVelocity;
+    Vec2<float> velocity;
+    float maxVelocity;
 
     MoveableMRect() : mRect(), velocity(), maxVelocity() {}
-    MoveableMRect(MeshRect mRect, Vec2d vel, double maxVel) : mRect(mRect), velocity(vel), maxVelocity(maxVel) {}
+    MoveableMRect(MeshRect mRect, Vec2<float> vel, float maxVel) : mRect(mRect), velocity(vel), maxVelocity(maxVel) {}
 };

@@ -17,12 +17,12 @@ namespace Utils
     // custom function for accurate rounding of doubles to ints
     int roundDtoI(double a);
 
-    Vec2i convVec(const Vec2d& vecD);
+    Vec2<int> convVec(const Vec2<float>& vecD);
 
     SDL_Rect convMeshRect(const MeshRect& mRect);
 
     // generates positions for all of the obstacles, filling the box size
     // boxSize / obstacleSize must give a clean number
-    std::vector<Vec2d> generatePositions(int numPositions, const Vec2d& obstacleSize, const Vec2d& boxSize);
+    std::vector<Vec2<float>> generatePositions(int numPositions, const Vec2<float>& obstacleSize, const Vec2<float>& boxSize);
 
 }

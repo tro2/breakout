@@ -12,18 +12,18 @@
 
 // INITIAL TYPES ================================
 
-const Vec2d ARENA_SIZE = { 300.f, 200.f };
-const double WALL_WIDTH = 5.f;
+const Vec2<float> ARENA_SIZE = { 300.f, 200.f };
+const float WALL_WIDTH = 5.f;
 
-const Vec2d BALL_SIZE = Vec2d(5.f, 5.f);
-const double BALL_VELOCITY = 80.f;
+const Vec2<float> BALL_SIZE = Vec2<float>(5.f, 5.f);
+const float BALL_VELOCITY = 80.f;
 
-const Vec2d PADDLE_SIZE = Vec2d(50.f, 5.f);
-const double PADDLE_VELOCITY = 150.f;
+const Vec2<float> PADDLE_SIZE = Vec2<float>(50.f, 5.f);
+const float PADDLE_VELOCITY = 150.f;
 
 const int INITIAL_TARGETS = 30;
-const Vec2d OBSTACLE_SIZE = Vec2d(25.f, 15.f);
-const Vec2d OBSTACLE_SECTION = Vec2d(250.f, 100.f);
+const Vec2<float> OBSTACLE_SIZE = Vec2<float>(25.f, 15.f);
+const Vec2<float> OBSTACLE_SECTION = Vec2<float>(250.f, 100.f);
 
 
 // ENUMS ========================================
@@ -49,8 +49,8 @@ struct AppContext {
     SDL_Window* gameWindow = nullptr;
     SDL_Renderer* gameRenderer = nullptr;
 
-    Vec2i WINDOW_SIZE = { 720, 480 };
-    double PIXELS_PER_UNIT = WINDOW_SIZE.x/ARENA_SIZE.x;
+    Vec2<int> WINDOW_SIZE = { 720, 480 };
+    float PIXELS_PER_UNIT = WINDOW_SIZE.x/ARENA_SIZE.x;
 };
 
 struct Textures {

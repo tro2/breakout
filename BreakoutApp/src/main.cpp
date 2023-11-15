@@ -91,7 +91,7 @@ int main(int, char**)
 
     // Delta timer
     LTimer deltaTimer;
-    double timeStep = 0.f;
+    float timeStep = 0.f;
 
     // event storage
     SDL_Event e;
@@ -108,7 +108,7 @@ int main(int, char**)
             }
             else if (e.type == SDL_WINDOWEVENT && e.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
             {
-                renderManager.updateWindowSize(Vec2i(e.window.data1, e.window.data2), app);
+                renderManager.updateWindowSize(Vec2<int>(e.window.data1, e.window.data2), app);
             }
         }
 
@@ -155,7 +155,7 @@ int main(int, char**)
         renderManager.renderGame(gameTextures, currentState, gameObjects, app);
 
         // update timestep for next loop
-        timeStep = static_cast<double>(deltaTimer.getTicks()) / 1000.f;
+        timeStep = static_cast<float>(deltaTimer.getTicks()) / 1000.f;
 
         // set max timestep to 60 fps
         if (timeStep > 1.f / 60.f)

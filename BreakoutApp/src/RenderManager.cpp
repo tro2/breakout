@@ -217,11 +217,11 @@ void RenderManager::renderGame(const Textures& gTextures, GameState gState, Game
     // render text
     switch (gState) {
     case READY:
-        renderTexture(gTextures.spacebarStartText, Vec2d(0.f, 15.f), app);
+        renderTexture(gTextures.spacebarStartText, Vec2<float>(0.f, 15.f), app);
         break;
     case VICTORY:
-        renderTexture(gTextures.spacebarStartText, Vec2d(0.f, 15.f), app);
-        renderTexture(gTextures.victoryText, Vec2d(0.f, -15.f), app);
+        renderTexture(gTextures.spacebarStartText, Vec2<float>(0.f, 15.f), app);
+        renderTexture(gTextures.victoryText, Vec2<float>(0.f, -15.f), app);
         break;
     }
 
@@ -231,15 +231,15 @@ void RenderManager::renderGame(const Textures& gTextures, GameState gState, Game
     SDL_RenderPresent(app.gameRenderer);
 }
 
-void RenderManager::renderTexture(const TextTexture& lTexture, Vec2d position, AppContext& app
+void RenderManager::renderTexture(const TextTexture& lTexture, Vec2<float> position, AppContext& app
     , SDL_Rect* clip) const
 {
     // define rendering space and render
 
     // position is given relative to world origin in center and position marking center of mesh
     // size of texture is pixels
-    Vec2i posI = Utils::convVec(position * app.PIXELS_PER_UNIT);
-    Vec2i sizeI = lTexture.getSize();
+    Vec2<int> posI = Utils::convVec(position * app.PIXELS_PER_UNIT);
+    Vec2<int> sizeI = lTexture.getSize();
 
     // conv pos to rect origin at top left
     posI.x -= sizeI.x / 2;
@@ -267,8 +267,8 @@ void RenderManager::renderTexture(const TextTexture& lTexture, Vec2d position, A
 //void RenderManager::renderRect(const MeshRect& mRect, const SDL_Color& color, AppContext& app)
 //{
 //    // position is given relative to world origin in center and position marking center of mesh
-//    Vec2i posI = Utils::convVec(Utils::scaleVecD(mRect.position, app.PIXELS_PER_UNIT));
-//    Vec2i sizeI = Utils::convVec(Utils::scaleVecD(mRect.size, app.PIXELS_PER_UNIT));
+//    Vec2<int> posI = Utils::convVec(Utils::scaleVecD(mRect.position, app.PIXELS_PER_UNIT));
+//    Vec2<int> sizeI = Utils::convVec(Utils::scaleVecD(mRect.size, app.PIXELS_PER_UNIT));
 //
 //    // conv pos to rect origin at top left
 //    posI.x -= sizeI.x / 2;
@@ -292,8 +292,8 @@ void RenderManager::renderTexture(const TextTexture& lTexture, Vec2d position, A
 void RenderManager::renderRect(const MeshRect& mRect, const SDL_Color& color, AppContext& app)
 {
     // position is given relative to world origin in center and position marking center of mesh
-    Vec2d posD = mRect.position * app.PIXELS_PER_UNIT;
-    Vec2d sizeD = mRect.size * app.PIXELS_PER_UNIT;
+    Vec2<float> posD = mRect.position * app.PIXELS_PER_UNIT;
+    Vec2<float> sizeD = mRect.size * app.PIXELS_PER_UNIT;
 
     // conv pos to rect origin at top left
     posD.x -= sizeD.x / 2;
@@ -303,8 +303,8 @@ void RenderManager::renderRect(const MeshRect& mRect, const SDL_Color& color, Ap
     posD.x = app.WINDOW_SIZE.x / 2 + posD.x;
     posD.y = app.WINDOW_SIZE.y / 2 - posD.y;
 
-    Vec2i posI = Utils::convVec(posD);
-    Vec2i sizeI = Utils::convVec(sizeD);
+    Vec2<int> posI = Utils::convVec(posD);
+    Vec2<int> sizeI = Utils::convVec(sizeD);
 
     SDL_Rect renderQuad = { posI.x, posI.y, sizeI.x, sizeI.y };
 
@@ -316,8 +316,8 @@ void RenderManager::renderRect(const MeshRect& mRect, const SDL_Color& color, Ap
 void RenderManager::renderRectOutline(const MeshRect& mRect, const SDL_Color& color, AppContext& app)
 {
     // position is given relative to world origin in center and position marking center of mesh
-    Vec2d posD = mRect.position * app.PIXELS_PER_UNIT;
-    Vec2d sizeD = mRect.size * app.PIXELS_PER_UNIT;
+    Vec2<float> posD = mRect.position * app.PIXELS_PER_UNIT;
+    Vec2<float> sizeD = mRect.size * app.PIXELS_PER_UNIT;
 
     // conv pos to rect origin at top left
     posD.x -= sizeD.x / 2;
@@ -327,8 +327,8 @@ void RenderManager::renderRectOutline(const MeshRect& mRect, const SDL_Color& co
     posD.x = app.WINDOW_SIZE.x / 2 + posD.x;
     posD.y = app.WINDOW_SIZE.y / 2 - posD.y;
 
-    Vec2i posI = Utils::convVec(posD);
-    Vec2i sizeI = Utils::convVec(sizeD);
+    Vec2<int> posI = Utils::convVec(posD);
+    Vec2<int> sizeI = Utils::convVec(sizeD);
 
     SDL_Rect renderQuad = { posI.x, posI.y, sizeI.x, sizeI.y };
 
@@ -337,9 +337,9 @@ void RenderManager::renderRectOutline(const MeshRect& mRect, const SDL_Color& co
     SDL_RenderDrawRect(app.gameRenderer, &renderQuad);
 }
 
-void RenderManager::updateWindowSize(Vec2i newSize, AppContext& app)
+void RenderManager::updateWindowSize(Vec2<int> newSize, AppContext& app)
 {
-    double newScaleFactor = newSize.x / ARENA_SIZE.x;
+    float newScaleFactor = newSize.x / ARENA_SIZE.x;
 
     if (ARENA_SIZE.y * newScaleFactor > newSize.y)
     {

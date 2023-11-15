@@ -43,7 +43,7 @@ public:
     void renderGame(const Textures& gTextures, GameState gState, GameObjects gObjects, AppContext& app);
 
     // render given texture at the given point, adapted to window size, optional clip for sprite sheet
-    void renderTexture(const TextTexture& text, Vec2d position, AppContext& app
+    void renderTexture(const TextTexture& text, Vec2<float> position, AppContext& app
         , SDL_Rect* clip = nullptr) const;
 
 
@@ -56,5 +56,5 @@ public:
     // TODO implement bulk draws, created a scaled and positioned array to pass
 
     // updates window size and scaling factor
-    void updateWindowSize(Vec2i newSize, AppContext& app);
+    void updateWindowSize(Vec2<int> newSize, AppContext& app);
 };

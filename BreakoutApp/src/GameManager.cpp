@@ -10,23 +10,23 @@ bool GameManager::loadObjects(GameObjects& gObjects)
 {
     // game Arena
     gObjects.bottomWall 
-        = MeshRect(Vec2d(0.f, -ARENA_SIZE.y / 2.f + WALL_WIDTH / 2.f)
-        , Vec2d(ARENA_SIZE.x, WALL_WIDTH));
+        = MeshRect(Vec2<float>(0.f, -ARENA_SIZE.y / 2.f + WALL_WIDTH / 2.f)
+        , Vec2<float>(ARENA_SIZE.x, WALL_WIDTH));
     gObjects.topWall 
-        = MeshRect(Vec2d(0.f, ARENA_SIZE.y / 2.f - WALL_WIDTH / 2.f)
-        , Vec2d(ARENA_SIZE.x, WALL_WIDTH));
+        = MeshRect(Vec2<float>(0.f, ARENA_SIZE.y / 2.f - WALL_WIDTH / 2.f)
+        , Vec2<float>(ARENA_SIZE.x, WALL_WIDTH));
     gObjects.leftWall 
-        = MeshRect(Vec2d(-ARENA_SIZE.x / 2.f + WALL_WIDTH / 2.f, 0.f)
-        , Vec2d(WALL_WIDTH, ARENA_SIZE.y));
+        = MeshRect(Vec2<float>(-ARENA_SIZE.x / 2.f + WALL_WIDTH / 2.f, 0.f)
+        , Vec2<float>(WALL_WIDTH, ARENA_SIZE.y));
     gObjects.rightWall 
-        = MeshRect(Vec2d(ARENA_SIZE.x / 2.f - WALL_WIDTH / 2.f, 0.f)
-        , Vec2d(WALL_WIDTH, ARENA_SIZE.y));
+        = MeshRect(Vec2<float>(ARENA_SIZE.x / 2.f - WALL_WIDTH / 2.f, 0.f)
+        , Vec2<float>(WALL_WIDTH, ARENA_SIZE.y));
 
     // ball
     gObjects.ball.mRect = MeshRect(
-          Vec2d(0.f, -ARENA_SIZE.y / 2.f + WALL_WIDTH + PADDLE_SIZE.y + BALL_SIZE.y / 2.f)
+          Vec2<float>(0.f, -ARENA_SIZE.y / 2.f + WALL_WIDTH + PADDLE_SIZE.y + BALL_SIZE.y / 2.f)
         , BALL_SIZE);
-    gObjects.ball.velocity = Vec2d(0.f, 0.f);
+    gObjects.ball.velocity = Vec2<float>(0.f, 0.f);
     gObjects.ball.maxVelocity = BALL_VELOCITY;
 
     // paddle
@@ -35,7 +35,7 @@ bool GameManager::loadObjects(GameObjects& gObjects)
     gObjects.paddle.maxVelocity = PADDLE_VELOCITY;
 
     // obstacles
-    std::vector<Vec2d> posArr = Utils::generatePositions(INITIAL_TARGETS, OBSTACLE_SIZE, OBSTACLE_SECTION);
+    std::vector<Vec2<float>> posArr = Utils::generatePositions(INITIAL_TARGETS, OBSTACLE_SIZE, OBSTACLE_SECTION);
     gObjects.obstacles.clear();
     for (auto it = posArr.begin(); it != posArr.end(); ++it)
     {
@@ -55,7 +55,7 @@ bool GameManager::loadObjects(GameObjects& gObjects)
     return true;
 }
 
-void GameManager::update(GameObjects& gObjects, GameState& gameState, PaddleMove& paddleMove, double timeStep)
+void GameManager::update(GameObjects& gObjects, GameState& gameState, PaddleMove& paddleMove, float timeStep)
 {
     // PADDLE ===================================
     // move paddle and check collisions with walls

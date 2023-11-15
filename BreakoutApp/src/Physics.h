@@ -14,21 +14,21 @@ namespace Physics
 
     // moves ball and checks against all objects, updating game state as necessary
     void moveElasticBounce(MoveableMRect& mObject, std::list<MeshRect>& obstacles
-        , const std::forward_list<MeshRect*>& walls, const MoveableMRect& paddle, double timeStep);
+        , const std::forward_list<MeshRect*>& walls, const MoveableMRect& paddle, float timeStep);
 
     // moves paddle and checks against walls
-    void moveStaticBounce(MoveableMRect& mObject, const std::forward_list<MeshRect*>& obstacles, double timeStep);
+    void moveStaticBounce(MoveableMRect& mObject, const std::forward_list<MeshRect*>& obstacles, float timeStep);
 
     // assuming non-zero movement, checks and resolves collisions of mObject
     // returns movement remaining after collision
-    Vec2d resolveElasticCollisions(MoveableMRect& mObject, Vec2d movement, std::list<MeshRect>& obstacles
-        , const std::forward_list<MeshRect*>& walls, const MoveableMRect& paddle, double timeStep);
+    Vec2<float> resolveElasticCollisions(MoveableMRect& mObject, Vec2<float> movement, std::list<MeshRect>& obstacles
+        , const std::forward_list<MeshRect*>& walls, const MoveableMRect& paddle, float timeStep);
 
     // assuming mObject and obstacle are colliding
     // moves mObject out of obstacle
     // updates velocity based on func
     // returns the distance moved
-    Vec2d resolveCollision(MoveableMRect& mObject, const MeshRect& obstacle, double timeStep
+    Vec2<float> resolveCollision(MoveableMRect& mObject, const MeshRect& obstacle, float timeStep
         , void (*velocityFunc)(MoveableMRect&, const MeshRect&));
 
     // assuming mObject and obstacle are colliding

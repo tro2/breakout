@@ -8,11 +8,11 @@ namespace resolveCollision
 	TEST(resolveElasticCollisions, ball_into_wall_from_left)
 	{
 		// tests whether ball hitting wall from the left will bounce off to the right
-		MoveableMRect ball = MoveableMRect(MeshRect(Vec2d(5.f, 0.f), Vec2d(10.f, 10.f)), Vec2d(-1.f, 0.f), 1.f);
+		MoveableMRect ball = MoveableMRect(MeshRect(Vec2<float>(5.f, 0.f), Vec2<float>(10.f, 10.f)), Vec2<float>(-1.f, 0.f), 1.f);
 
 		std::list<MeshRect> obstacles;
 		std::forward_list<MeshRect*> walls;
-		walls.push_front(new MeshRect(Vec2d(0.f, 0.f), Vec2d(10.f, 10.f)));
+		walls.push_front(new MeshRect(Vec2<float>(0.f, 0.f), Vec2<float>(10.f, 10.f)));
 
 		Physics::moveElasticBounce(ball, obstacles, walls, MoveableMRect(), 1.f);
 
@@ -23,11 +23,11 @@ namespace resolveCollision
 	TEST(resolveElasticCollisions, ball_into_wall_from_right)
 	{
 		// tests whether ball hitting wall from the right will bounce off to the left
-		MoveableMRect ball = MoveableMRect(MeshRect(Vec2d(-5.f, 0.f), Vec2d(10.f, 10.f)), Vec2d(1.f, 0.f), 1.f);
+		MoveableMRect ball = MoveableMRect(MeshRect(Vec2<float>(-5.f, 0.f), Vec2<float>(10.f, 10.f)), Vec2<float>(1.f, 0.f), 1.f);
 
 		std::list<MeshRect> obstacles;
 		std::forward_list<MeshRect*> walls;
-		walls.push_front(new MeshRect(Vec2d(0.f, 0.f), Vec2d(10.f, 10.f)));
+		walls.push_front(new MeshRect(Vec2<float>(0.f, 0.f), Vec2<float>(10.f, 10.f)));
 
 		Physics::moveElasticBounce(ball, obstacles, walls, MoveableMRect(), 1.f);
 
@@ -38,8 +38,8 @@ namespace resolveCollision
 namespace checkCollision
 {
 	TEST(CollisionTest, A_above_B) {
-		MeshRect a = MeshRect(Vec2d(0.f, 10.f), Vec2d(10.f, 10.f));
-		MeshRect b = MeshRect(Vec2d(0.f, 0.f), Vec2d(10.f, 10.f));
+		MeshRect a = MeshRect(Vec2<float>(0.f, 10.f), Vec2<float>(10.f, 10.f));
+		MeshRect b = MeshRect(Vec2<float>(0.f, 0.f), Vec2<float>(10.f, 10.f));
 
 		bool result = Physics::checkCollision(a, b);
 
@@ -47,8 +47,8 @@ namespace checkCollision
 	}
 
 	TEST(CollisionTest, B_above_A) {
-		MeshRect a = MeshRect(Vec2d(0.f, -20.f), Vec2d(10.f, 10.f));
-		MeshRect b = MeshRect(Vec2d(0.f, 10.f), Vec2d(10.f, 10.f));
+		MeshRect a = MeshRect(Vec2<float>(0.f, -20.f), Vec2<float>(10.f, 10.f));
+		MeshRect b = MeshRect(Vec2<float>(0.f, 10.f), Vec2<float>(10.f, 10.f));
 
 		bool result = Physics::checkCollision(a, b);
 
@@ -56,8 +56,8 @@ namespace checkCollision
 	}
 
 	TEST(CollisionTest, A_Int_B_above) {
-		MeshRect a = MeshRect(Vec2d(0.f, 9.f), Vec2d(10.f, 10.f));
-		MeshRect b = MeshRect(Vec2d(0.f, 0.f), Vec2d(10.f, 10.f));
+		MeshRect a = MeshRect(Vec2<float>(0.f, 9.f), Vec2<float>(10.f, 10.f));
+		MeshRect b = MeshRect(Vec2<float>(0.f, 0.f), Vec2<float>(10.f, 10.f));
 
 		bool result = Physics::checkCollision(a, b);
 
@@ -65,8 +65,8 @@ namespace checkCollision
 	}
 
 	TEST(CollisionTest, B_int_A_above) {
-		MeshRect a = MeshRect(Vec2d(0.f, -4.f), Vec2d(10.f, 10.f));
-		MeshRect b = MeshRect(Vec2d(0.f, 5.f), Vec2d(10.f, 10.f));
+		MeshRect a = MeshRect(Vec2<float>(0.f, -4.f), Vec2<float>(10.f, 10.f));
+		MeshRect b = MeshRect(Vec2<float>(0.f, 5.f), Vec2<float>(10.f, 10.f));
 
 		bool result = Physics::checkCollision(a, b);
 
@@ -76,8 +76,8 @@ namespace checkCollision
 
 	// left right
 	TEST(CollisionTest, A_left_B) {
-		MeshRect a = MeshRect(Vec2d(5.f, 10.f), Vec2d(10.f, 10.f));
-		MeshRect b = MeshRect(Vec2d(15.f, 10.f), Vec2d(10.f, 10.f));
+		MeshRect a = MeshRect(Vec2<float>(5.f, 10.f), Vec2<float>(10.f, 10.f));
+		MeshRect b = MeshRect(Vec2<float>(15.f, 10.f), Vec2<float>(10.f, 10.f));
 
 		bool result = Physics::checkCollision(a, b);
 
@@ -85,8 +85,8 @@ namespace checkCollision
 	}
 
 	TEST(CollisionTest, B_left_A) {
-		MeshRect a = MeshRect(Vec2d(15.f, 10.f), Vec2d(10.f, 10.f));
-		MeshRect b = MeshRect(Vec2d(-15.f, 10.f), Vec2d(10.f, 10.f));
+		MeshRect a = MeshRect(Vec2<float>(15.f, 10.f), Vec2<float>(10.f, 10.f));
+		MeshRect b = MeshRect(Vec2<float>(-15.f, 10.f), Vec2<float>(10.f, 10.f));
 
 		bool result = Physics::checkCollision(a, b);
 
@@ -94,8 +94,8 @@ namespace checkCollision
 	}
 
 	TEST(CollisionTest, A_left_Int_B) {
-		MeshRect a = MeshRect(Vec2d(-5.f, 10.f), Vec2d(10.f, 10.f));
-		MeshRect b = MeshRect(Vec2d(0.f, 10.f), Vec2d(10.f, 10.f));
+		MeshRect a = MeshRect(Vec2<float>(-5.f, 10.f), Vec2<float>(10.f, 10.f));
+		MeshRect b = MeshRect(Vec2<float>(0.f, 10.f), Vec2<float>(10.f, 10.f));
 
 		bool result = Physics::checkCollision(a, b);
 
@@ -103,8 +103,8 @@ namespace checkCollision
 	}
 
 	TEST(CollisionTest, B_left_int_A) {
-		MeshRect a = MeshRect(Vec2d(5.f, 10.f), Vec2d(10.f, 10.f));
-		MeshRect b = MeshRect(Vec2d(0.f, 10.f), Vec2d(10.f, 10.f));
+		MeshRect a = MeshRect(Vec2<float>(5.f, 10.f), Vec2<float>(10.f, 10.f));
+		MeshRect b = MeshRect(Vec2<float>(0.f, 10.f), Vec2<float>(10.f, 10.f));
 
 		bool result = Physics::checkCollision(a, b);
 

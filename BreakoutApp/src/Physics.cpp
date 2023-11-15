@@ -7,15 +7,15 @@
 bool Physics::checkCollision(const MeshRect& a, const MeshRect& b)
 {
     // the sides to check collisions
-    double leftA;
-    double rightA;
-    double topA;
-    double bottomA;
+    float leftA;
+    float rightA;
+    float topA;
+    float bottomA;
 
-    double leftB;
-    double rightB;
-    double topB;
-    double bottomB;
+    float leftB;
+    float rightB;
+    float topB;
+    float bottomB;
 
     // Calculate the sides of rect A
     leftA = a.position.x - a.size.x / 2.f;
@@ -45,9 +45,9 @@ bool Physics::checkCollision(const MeshRect& a, const MeshRect& b)
     return true;
 }
 
-void Physics::moveElasticBounce(MoveableMRect& mObject, std::list<MeshRect>& obstacles, const std::forward_list<MeshRect*>& walls, const MoveableMRect& paddle, double timeStep)
+void Physics::moveElasticBounce(MoveableMRect& mObject, std::list<MeshRect>& obstacles, const std::forward_list<MeshRect*>& walls, const MoveableMRect& paddle, float timeStep)
 {
-    Vec2d movement = mObject.velocity * timeStep;
+    Vec2<float> movement = mObject.velocity * timeStep;
     
     while (movement.x != 0.f || movement.y != 0.f)
     {   
@@ -55,7 +55,7 @@ void Physics::moveElasticBounce(MoveableMRect& mObject, std::list<MeshRect>& obs
     }
 }
 
-void Physics::moveStaticBounce(MoveableMRect& mObject, const std::forward_list<MeshRect*>& obstacles, double timeStep)
+void Physics::moveStaticBounce(MoveableMRect& mObject, const std::forward_list<MeshRect*>& obstacles, float timeStep)
 {
     mObject.mRect.position += mObject.velocity * timeStep;
 
@@ -68,7 +68,7 @@ void Physics::moveStaticBounce(MoveableMRect& mObject, const std::forward_list<M
     }
 }
 
-Vec2d Physics::resolveElasticCollisions(MoveableMRect& mObject, Vec2d movement, std::list<MeshRect>& obstacles, const std::forward_list<MeshRect*>& walls, const MoveableMRect& paddle, double timeStep)
+Vec2<float> Physics::resolveElasticCollisions(MoveableMRect& mObject, Vec2<float> movement, std::list<MeshRect>& obstacles, const std::forward_list<MeshRect*>& walls, const MoveableMRect& paddle, float timeStep)
 {
      mObject.mRect.position += movement;
 
@@ -89,7 +89,7 @@ Vec2d Physics::resolveElasticCollisions(MoveableMRect& mObject, Vec2d movement, 
             it = obstacles.erase(it);
 
             // increase velocity
-            Vec2d direction = mObject.velocity * (1 / mObject.maxVelocity);
+            Vec2<float> direction = mObject.velocity * (1 / mObject.maxVelocity);
 
             mObject.maxVelocity += 5;
             mObject.velocity = direction * mObject.maxVelocity;
@@ -110,15 +110,15 @@ Vec2d Physics::resolveElasticCollisions(MoveableMRect& mObject, Vec2d movement, 
     }
 
     // return 0 if no collisions detected
-    return Vec2d();
+    return Vec2<float>();
 }
 
-Vec2d Physics::resolveCollision(MoveableMRect& mObject, const MeshRect& obstacle, double timeStep, void (*velocityFunc)(MoveableMRect&, const MeshRect&))
+Vec2<float> Physics::resolveCollision(MoveableMRect& mObject, const MeshRect& obstacle, float timeStep, void (*velocityFunc)(MoveableMRect&, const MeshRect&))
 {
-    Vec2d distanceMoved;
+    Vec2<float> distanceMoved;
 
     // opposite of mObject with length 0.1f
-    Vec2d moveIncrement = mObject.velocity.unitVector() * -0.1f;
+    Vec2<float> moveIncrement = mObject.velocity.unitVector() * -0.1f;
 
     // update mObject velocity
     velocityFunc(mObject, obstacle);
@@ -223,5 +223,5 @@ void Physics::resolvePaddleCollisionVelocity(MoveableMRect& ball, const MeshRect
 void Physics::resolveStaticCollisionVelocity(MoveableMRect& mObject, const MeshRect& obstacle)
 {
     // set mObject velocity to 0
-    mObject.velocity = Vec2d();
+    mObject.velocity = Vec2<float>();
 }

@@ -13,9 +13,9 @@ int Utils::roundDtoI(double a)
     return static_cast<int>(a + 0.5f);
 }
 
-Vec2i Utils::convVec(const Vec2d& vecD)
+Vec2<int> Utils::convVec(const Vec2<float>& vecD)
 {
-    return Vec2i(Utils::roundDtoI(vecD.x), Utils::roundDtoI(vecD.y));
+    return Vec2<int>(Utils::roundDtoI(vecD.x), Utils::roundDtoI(vecD.y));
 }
 
 SDL_Rect Utils::convMeshRect(const MeshRect& mRect)
@@ -30,11 +30,11 @@ SDL_Rect Utils::convMeshRect(const MeshRect& mRect)
     return rect;
 }
 
-std::vector<Vec2d> Utils::generatePositions(int numPositions, const Vec2d& obstacleSize, const Vec2d& boxSize)
+std::vector<Vec2<float>> Utils::generatePositions(int numPositions, const Vec2<float>& obstacleSize, const Vec2<float>& boxSize)
 {
-    std::vector<Vec2d> positionHolder(numPositions);
+    std::vector<Vec2<float>> positionHolder(numPositions);
 
-    Vec2d startPosition(obstacleSize.x / 2.f, boxSize.y - obstacleSize.y / 2.f);
+    Vec2<float> startPosition(obstacleSize.x / 2.f, boxSize.y - obstacleSize.y / 2.f);
     int numColumns = static_cast<int>(boxSize.x/obstacleSize.x);
     int numRows = (numPositions + numColumns - 1) / numColumns; // rounds up if both numbers are positive
 
@@ -45,7 +45,7 @@ std::vector<Vec2d> Utils::generatePositions(int numPositions, const Vec2d& obsta
     {
         for (int j = 0; j < numColumns && index < numPositions; ++j)
         {
-            positionHolder[index] = Vec2d(startPosition.x + obstacleSize.x * j - boxSize.x / 2.f
+            positionHolder[index] = Vec2<float>(startPosition.x + obstacleSize.x * j - boxSize.x / 2.f
                 , startPosition.y - obstacleSize.y * i - boxSize.y / 2.f);
 
             index++;
