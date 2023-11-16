@@ -29,6 +29,24 @@ SDL_Rect Utils::convMeshRect(const MeshRect& mRect)
     return rect;
 }
 
+MeshRect Utils::translateTopLeft(const MeshRect& mRect, const AppContext& app)
+{
+    // position is given relative to world origin in center and position marking center of mesh
+    MeshRect mCopy = mRect;
+    mCopy.position *= app.PIXELS_PER_UNIT;
+    mCopy.size *= app.PIXELS_PER_UNIT;
+
+    // conv pos to rect origin at top left
+    mCopy.position.x -= mCopy.size.x / 2;
+    mCopy.position.y += mCopy.size.y / 2;
+
+    // conv pos to relative to top left
+    mCopy.position.x = app.WINDOW_SIZE.x / 2 + mCopy.position.x;
+    mCopy.position.y = app.WINDOW_SIZE.y / 2 - mCopy.position.y;
+
+    return mCopy;
+}
+
 std::vector<Vec2<float>> Utils::generatePositions(int numPositions, const Vec2<float>& obstacleSize, const Vec2<float>& boxSize)
 {
     std::vector<Vec2<float>> positionHolder(numPositions);

@@ -257,51 +257,21 @@ void RenderManager::renderTexture(const TextTexture& lTexture, Vec2<float> posit
     SDL_RenderCopy(app.gameRenderer, lTexture.getMTexture(), clip, &renderQuad);
 }
 
-// WARNING ======================================
-// this render function is more accurate at transforming pixels, but not perfect
-// use only with numbers that scale nicely (use supported resolutions)
-// ==============================================
+// TODO if appContext is not directly modified, is it still useful to put const on app?
 void RenderManager::renderRect(const MeshRect& mRect, const SDL_Color& color, AppContext& app)
 {
-    // position is given relative to world origin in center and position marking center of mesh
-    MeshRect mCopy = mRect;
-    mCopy.position *= app.PIXELS_PER_UNIT;
-    mCopy.size *= app.PIXELS_PER_UNIT;
-
-    // conv pos to rect origin at top left
-    mCopy.position.x -= mCopy.size.x / 2;
-    mCopy.position.y += mCopy.size.y / 2;
-
-    // conv pos to relative to top left
-    mCopy.position.x = app.WINDOW_SIZE.x / 2 + mCopy.position.x;
-    mCopy.position.y = app.WINDOW_SIZE.y / 2 - mCopy.position.y;
-
-    // convert to fRect
-    SDL_FRect fRect = mCopy.castFRect();
+    SDL_FRect translatedFRect = Utils::translateTopLeft(mRect, app).castFRect();
 
     SDL_SetRenderDrawColor(app.gameRenderer, color.r, color.g, color.b, color.a);
-    SDL_RenderFillRectF(app.gameRenderer, &fRect);
+    SDL_RenderFillRectF(app.gameRenderer, &translatedFRect);
 }
 
 void RenderManager::renderRectOutline(const MeshRect& mRect, const SDL_Color& color, AppContext& app)
 {
-    // position is given relative to world origin in center and position marking center of mesh
-    MeshRect mCopy = mRect;
-    mCopy.position *= app.PIXELS_PER_UNIT;
-    mCopy.size *= app.PIXELS_PER_UNIT;
-
-    // conv pos to rect origin at top left
-    mCopy.position.x -= mCopy.size.x / 2;
-    mCopy.position.y += mCopy.size.y / 2;
-
-    // conv pos to relative to top left
-    mCopy.position.x = app.WINDOW_SIZE.x / 2 + mCopy.position.x;
-    mCopy.position.y = app.WINDOW_SIZE.y / 2 - mCopy.position.y;
-
-    SDL_FRect fRect = mCopy.castFRect();
+    SDL_FRect translatedFRect = Utils::translateTopLeft(mRect, app).castFRect();
 
     SDL_SetRenderDrawColor(app.gameRenderer, color.r, color.g, color.b, color.a);
-    SDL_RenderDrawRectF(app.gameRenderer, &fRect);
+    SDL_RenderDrawRectF(app.gameRenderer, &translatedFRect);
 }
 
 void RenderManager::updateWindowSize(Vec2<int> newSize, AppContext& app)

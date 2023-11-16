@@ -21,6 +21,9 @@ namespace Utils
 
     SDL_Rect convMeshRect(const MeshRect& mRect);
 
+    // translates MeshRect from world origin in the center to top left
+    MeshRect translateTopLeft(const MeshRect& mRect, const AppContext& app);
+
     // generates positions for all of the obstacles, filling the box size
     // boxSize / obstacleSize must give a clean number
     std::vector<Vec2<float>> generatePositions(int numPositions, const Vec2<float>& obstacleSize, const Vec2<float>& boxSize);
