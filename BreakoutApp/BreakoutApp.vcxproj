@@ -157,7 +157,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\SDL\include;$(SolutionDir)Dependencies\SDL_image\include;$(SolutionDir)Dependencies\SDL_mixer\include;$(SolutionDir)Dependencies\SDL_ttf\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)imgui;$(SolutionDir)Dependencies\SDL\include;$(SolutionDir)Dependencies\SDL_image\include;$(SolutionDir)Dependencies\SDL_mixer\include;$(SolutionDir)Dependencies\SDL_ttf\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
