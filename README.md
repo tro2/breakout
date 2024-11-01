@@ -1,4 +1,6 @@
 # Breakout
+## Overview
+This project builds off of the [pong](https://github.com/tro2/pong) game I created, adding more complicated state and collision logic, and improved UI.
 
 ## Initial setup
 
